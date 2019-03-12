@@ -13,7 +13,7 @@ public interface ILockCommand {
      * @param key 锁的KEY
      * @param value 锁的VALUE
      * @param timeout 获取锁的超时时间(毫秒)
-     * @param expire 分布式锁中分组的key的过期时间，过期后锁将失效(毫秒)
+     * @param expire 分布式锁中分组的key的过期时间，过期后锁将失效(秒)
      * @return 缓存锁
      */
     public RedisLock lock(String key, String value, long timeout, int expire);

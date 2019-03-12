@@ -30,4 +30,13 @@ public class RedisLock {
     public boolean isLock() {
         return lock;
     }
+
+    @Override
+    public String toString() {
+        return "RedisLock{" +
+                "key='" + key + '\'' +
+                ", value='" + value + '\'' +
+                ", lock=" + lock +
+                '}';
+    }
 }

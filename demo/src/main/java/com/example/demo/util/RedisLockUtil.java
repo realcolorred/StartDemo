@@ -32,8 +32,8 @@ public class RedisLockUtil {
     /**
      * 加锁
      * @param key 锁的KEY
-     * @param timeout 获取锁的超时时间
-     * @param expire 分布式锁中分组的key的过期时间，过期后锁将失效
+     * @param timeout 获取锁的超时时间(毫秒)
+     * @param expire 分布式锁中分组的key的过期时间，过期后锁将失效(秒)
      * @return 缓存锁
      */
     public static RedisLock lock(String key, long timeout, int expire) {
