@@ -3,7 +3,7 @@ package com.example.demo.util;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class DateUtil {
+public class DateHelper {
     public static String YYYYMMDDHHMMSS      = "yyyyMMddHHmmss";
     public static String YYYYMMDDHHMMSS_read = "yyyy-MM-dd HH:mm:ss";
 
