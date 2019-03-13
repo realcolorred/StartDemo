@@ -5,4 +5,6 @@ package com.example.demo.util.redis;
  */
 public interface RedisConstans {
     public static final String REDIS_LOCK = "redis_lock";
+
+    public static final String REDIS_STRING = "redis_string";
 }

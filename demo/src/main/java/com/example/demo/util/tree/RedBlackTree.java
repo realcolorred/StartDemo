@@ -1,4 +1,4 @@
-package com.example.demo.util;
+package com.example.demo.util.tree;
 
 public class RedBlackTree<T extends Comparable> {
 

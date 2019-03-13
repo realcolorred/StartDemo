@@ -1,12 +1,8 @@
 package com.example.demo.util.redis;
 
+import com.example.demo.util.PropertyUtil;
 import com.example.demo.util.redis.command.IBinaryJedis;
-import org.apache.tomcat.util.http.fileupload.IOUtils;
-import redis.clients.jedis.BinaryJedisCluster;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Enumeration;
 import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.ConcurrentHashMap;
@@ -26,7 +22,7 @@ public class BinaryJedisFactory {
         if (binaryJedis != null) {
             return binaryJedis;
         }
-        Properties props = getProperties(redisKey + ".properties");
+        Properties props = PropertyUtil.getProperties(redisKey + ".properties");
         if (props == null || props.isEmpty()) {
             return null;
         }
@@ -34,52 +30,24 @@ public class BinaryJedisFactory {
     }
 
     private static IBinaryJedis initJedis(String redisKey, Properties props) {
-        IBinaryJedis jedis = null;
+        IBinaryJedis jedis;
         synchronized (jedisCache) {
             jedis = jedisCache.get(redisKey);
             if (jedis != null) {
                 return jedis;
             }
 
-            String jedisClass = props.getProperty("jedis-class", "single"); // 缓存类型
+            String jedisClass = props.getProperty("jedis-class"); // 缓存类型
             if ("cluster".equals(jedisClass)) {
-
-            } else if ("single".equals(jedisClass)) {
-                jedis = new BinaryJedisPool(getProperties(props, "jedis-single."));
+                jedis = new BinaryJedisCluster(PropertyUtil.getProperties(props, "jedis-cluster.")); // 集群
+            } else if ("pool".equals(jedisClass)) {
+                jedis = new BinaryJedisPool(PropertyUtil.getProperties(props, "jedis-pool."));
             } else {
                 return null;
             }
             jedisCache.put(redisKey, jedis);
         }
         return jedis;
-    }
-
-    public static Properties getProperties(String redisCfg) {
-        InputStream is = null;
-        try {
-            is = Thread.currentThread().getContextClassLoader().getResourceAsStream(redisCfg);
-            if (is != null) {
-                Properties props = new Properties();
-                props.load(is);
-                return props;
-            }
-        } catch (IOException ignore) {
-        } finally {
-            IOUtils.closeQuietly(is);
-        }
-        return null;
-    }
-
-    protected static Properties getProperties(Properties props, String prefix) {
-        Properties new_props = new Properties();
-        Enumeration<Object> keys = props.keys();
-        while (keys.hasMoreElements()) {
-            String key = (String) keys.nextElement();
-            if (key.startsWith(prefix)) {
-                new_props.setProperty(key.substring(prefix.length()), props.getProperty(key));
-            }
-        }
-        return new_props;
     }
 
 }
