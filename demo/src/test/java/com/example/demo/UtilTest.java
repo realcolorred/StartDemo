@@ -6,7 +6,7 @@ import com.example.demo.util.redis.RedisLock;
 public class UtilTest {
 
     public static void main(String args[]) {
-        RedisLock lock = RedisLockUtil.lock("lock-2", 1000, 30);
+        RedisLock lock = RedisLockUtil.lock("lock-2");
         System.out.println(lock);
     }
 }
