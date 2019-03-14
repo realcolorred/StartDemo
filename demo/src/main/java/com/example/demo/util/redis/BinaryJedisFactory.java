@@ -9,8 +9,8 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Created by realcolorred on 2019/3/12.
- *
- *  二进制缓存工厂
+ * <p>
+ * 二进制缓存工厂
  */
 public class BinaryJedisFactory {
 

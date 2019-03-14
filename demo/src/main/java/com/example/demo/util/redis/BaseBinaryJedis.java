@@ -1,5 +1,6 @@
 package com.example.demo.util.redis;
 
+import com.example.demo.constants.SysConstants;
 import com.example.demo.util.PropertyUtil;
 import com.example.demo.util.redis.command.IBinaryJedis;
 import redis.clients.jedis.Jedis;
@@ -10,14 +11,13 @@ import java.util.Random;
 
 /**
  * Created by realcolorred on 2019/3/12.
- *
+ * <p>
  * 二进制缓存基类
  * IdclogRedis存储涉及的redis二进制命令的基类
  */
 public abstract class BaseBinaryJedis implements IBinaryJedis {
 
-    private static final long   MILLI_NANO_TIME = 1000 * 1000L;   //纳秒和毫秒之间的转换率
-    private static final String ENCODING        = "UTF-8";
+    private static final long MILLI_NANO_TIME = 1000 * 1000L;   //纳秒和毫秒之间的转换率
 
     private static final Random RANDOM = new Random();
 
@@ -27,8 +27,8 @@ public abstract class BaseBinaryJedis implements IBinaryJedis {
         timeout *= MILLI_NANO_TIME;
 
         try {
-            byte[] keyBytes = key.getBytes(ENCODING);
-            byte[] valueBytes = value.getBytes(ENCODING);
+            byte[] keyBytes = key.getBytes(SysConstants.SYS_ENCODING);
+            byte[] valueBytes = value.getBytes(SysConstants.SYS_ENCODING);
 
             //在timeout的时间范围内不断轮询锁
             while (System.nanoTime() - startNanoTime < timeout) {
@@ -39,7 +39,7 @@ public abstract class BaseBinaryJedis implements IBinaryJedis {
                     return new RedisLock(key, value, true);
                 } else {
                     byte[] retBytes = get(keyBytes);
-                    String retValue = new String(retBytes, ENCODING);
+                    String retValue = new String(retBytes, SysConstants.SYS_ENCODING);
 
                     // 如果已经有了相同的锁,且锁的值相同,说明是同一个锁, 返回锁定成功 ,更新锁过期时间
                     if (value.equals(retValue)) {
@@ -61,7 +61,7 @@ public abstract class BaseBinaryJedis implements IBinaryJedis {
     public boolean ulock(RedisLock redisLock) {
         try {
             if (redisLock.isLock()) {
-                this.del(redisLock.getKey().getBytes(ENCODING));
+                this.del(redisLock.getKey().getBytes(SysConstants.SYS_ENCODING));
             }
             return true;
         } catch (Throwable e) {
@@ -72,8 +72,7 @@ public abstract class BaseBinaryJedis implements IBinaryJedis {
     /**
      * 获取Jedis连接池配置
      *
-     * @param props
-     *            配置文件属性
+     * @param props 配置文件属性
      * @return Jedis连接池配置
      */
     protected JedisPoolConfig getConfig(Properties props) {

@@ -1,7 +1,7 @@
 package com.example.demo.util;
 
 import com.example.demo.util.redis.BinaryJedisFactory;
-import com.example.demo.util.redis.RedisConstans;
+import com.example.demo.constants.RedisConstans;
 import com.example.demo.util.redis.RedisLock;
 import com.example.demo.util.redis.command.ILockCommand;
 
