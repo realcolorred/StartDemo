@@ -45,6 +45,7 @@ public class BinaryJedisFactory {
             } else {
                 return null;
             }
+            System.out.println("创建了一个新的缓存对象:" + jedisClass);
             jedisCache.put(redisKey, jedis);
         }
         return jedis;
