@@ -14,12 +14,9 @@ public class UUIDUtil {
     private static String uuid32(UUID uuid) {
         long msb = uuid.getMostSignificantBits();
         long lsb = uuid.getLeastSignificantBits();
-        StringBuilder str = new StringBuilder() //
-            .append(digits(msb >> 32, 8)) //
-            .append(digits(msb >> 16, 4)) //
-            .append(digits(msb, 4)) //
-            .append(digits(lsb >> 48, 4)) //
-            .append(digits(lsb, 12)); //
+        StringBuilder str = new StringBuilder();
+        str.append(digits(msb >> 32, 8) + digits(msb >> 16, 4) + digits(msb, 4));
+        str.append(digits(lsb >> 48, 4) + digits(lsb, 12));
         return str.toString();
     }
 

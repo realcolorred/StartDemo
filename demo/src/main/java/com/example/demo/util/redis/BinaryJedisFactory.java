@@ -42,6 +42,8 @@ public class BinaryJedisFactory {
                 jedis = new BinaryJedisCluster(PropertyUtil.getProperties(props, "jedis-cluster.")); // 集群
             } else if ("pool".equals(jedisClass)) {
                 jedis = new BinaryJedisPool(PropertyUtil.getProperties(props, "jedis-pool."));
+            } else if ("ctg".equals(jedisClass)) {
+                //jedis = new BinaryJedisCtg(PropertyUtil.getProperties(props, "jedis-ctg."));
             } else {
                 return null;
             }

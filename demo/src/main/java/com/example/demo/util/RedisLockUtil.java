@@ -22,10 +22,10 @@ public class RedisLockUtil {
                 return lockCommand;
             }
             // 初始化
-            lockCommand = BinaryJedisFactory.getJedis(RedisConstans.REDIS_LOCK);
+            lockCommand = BinaryJedisFactory.getJedis(RedisConstans.REDIS_LOCK_CONFIG);
         }
         if (lockCommand == null) {
-            throw new RuntimeException("加锁失败:不支持的加锁类型" + RedisConstans.REDIS_LOCK);
+            throw new RuntimeException("加锁失败:不支持的加锁类型" + RedisConstans.REDIS_LOCK_CONFIG);
         }
         return lockCommand;
     }
