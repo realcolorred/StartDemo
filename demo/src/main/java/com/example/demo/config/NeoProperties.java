@@ -7,12 +7,12 @@ import org.springframework.stereotype.Component;
 *
 * 读取配置
 * */
-//@Component()
+@Component()
 public class NeoProperties {
-    //@Value("${com.neo.title}")
+    @Value("${com.neo.title}")
     private String title;
 
-    //@Value("${com.neo.description}")
+    @Value("${com.neo.description}")
     private String description;
 
     public String getTitle() {

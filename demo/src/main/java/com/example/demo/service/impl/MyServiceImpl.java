@@ -1,7 +1,7 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.mapper.MyFixLogMapper;
-import com.example.demo.mapper.ServantMapper;
+import com.example.demo.dao.MyFixLogMapper;
+import com.example.demo.dao.ServantMapper;
 import com.example.demo.entity.DblogEntity;
 import com.example.demo.service.IMyService;
 import com.example.demo.util.NumberHelper;
