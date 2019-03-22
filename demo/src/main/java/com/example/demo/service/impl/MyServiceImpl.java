@@ -1,7 +1,7 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.dao.MyFixLogMapper;
-import com.example.demo.dao.ServantMapper;
+import com.example.demo.dao.sourceCompany.MyFixLogMapper;
+import com.example.demo.dao.sourceHome.ServantMapper;
 import com.example.demo.entity.DblogEntity;
 import com.example.demo.service.IMyService;
 import com.example.demo.util.NumberHelper;
@@ -10,11 +10,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service("myService")
 public class MyServiceImpl implements IMyService {
 
-    @Autowired
-    @Qualifier("servantMapper")
+    //@Autowired
+    //@Qualifier("servantMapper")
     private ServantMapper servantMapper;
 
     @Autowired
@@ -35,5 +37,10 @@ public class MyServiceImpl implements IMyService {
             return myFixLogMapper.getOne(id);
         }
         return null;
+    }
+
+    @Override
+    public List<DblogEntity> getMyFixLogDefault() {
+        return myFixLogMapper.getDefault();
     }
 }

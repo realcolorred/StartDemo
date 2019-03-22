@@ -12,10 +12,10 @@ import java.util.Properties;
  */
 public class PropertyUtil {
 
-    public static Properties getProperties(String redisCfg) {
+    public static Properties getProperties(String propName) {
         InputStream is = null;
         try {
-            is = Thread.currentThread().getContextClassLoader().getResourceAsStream(redisCfg);
+            is = Thread.currentThread().getContextClassLoader().getResourceAsStream(propName);
             if (is != null) {
                 Properties props = new Properties();
                 props.load(is);
