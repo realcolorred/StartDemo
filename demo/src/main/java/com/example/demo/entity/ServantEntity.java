@@ -2,13 +2,13 @@ package com.example.demo.entity;
 
 public class ServantEntity {
 
-    private Long servantId;
+    private Long   servantId;
     private String servantNameChina;
     private String servantNameEnglish;
     private String sex;
     private String weight;
     private String height;
-    private Long star;
+    private Long   star;
 
     public Long getServantId() {
         return servantId;
