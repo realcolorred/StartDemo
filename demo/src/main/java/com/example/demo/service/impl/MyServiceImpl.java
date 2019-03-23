@@ -15,8 +15,8 @@ import java.util.List;
 @Service("myService")
 public class MyServiceImpl implements IMyService {
 
-    //@Autowired
-    //@Qualifier("servantMapper")
+    @Autowired
+    @Qualifier("servantMapper")
     private ServantMapper servantMapper;
 
     @Autowired
