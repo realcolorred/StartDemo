@@ -26,7 +26,7 @@ public class DemoApplicationTests {
 
     @Test
     public void getHello() throws Exception {
-        mvc.perform(MockMvcRequestBuilders.get("/insert")
+        mvc.perform(MockMvcRequestBuilders.get("/insertAsTest")
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andDo(MockMvcResultHandlers.print())

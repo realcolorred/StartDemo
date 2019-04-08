@@ -15,6 +15,11 @@ public class ServantController {
     @Qualifier("myService")
     private IMyService servantService;
 
+    @RequestMapping("/insertAsTest")
+    public int insertServantTest() {
+        return servantService.insertServant("我是一个测试");
+    }
+
     @RequestMapping("/insert")
     public int insertServant(@RequestParam String name) {
         return servantService.insertServant(name);
