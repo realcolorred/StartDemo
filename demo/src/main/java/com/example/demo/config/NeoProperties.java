@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 *
 * 读取配置
 * */
-@Component()
+@Component
 public class NeoProperties {
     @Value("${com.neo.title}")
     private String title;
