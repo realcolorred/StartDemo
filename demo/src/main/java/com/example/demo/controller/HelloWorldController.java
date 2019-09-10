@@ -245,8 +245,4 @@ public class HelloWorldController {
         return list;
 
     }
-
-    private String getHello() {
-        return "项目启动成功,现在的时间是" + DateHelper.toString(new Date(), DateHelper.YYYYMMDDHHMMSS_read);
-    }
 }

@@ -8,12 +8,14 @@ import org.springframework.context.annotation.Configuration;
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+
 /*
-* 拦截器
+* 过滤器
 *
 * */
 @Configuration
-public class WebConfiguration {
+public class FilterConfiguration {
+    
     @Bean
     public RemoteIpFilter remoteIpFilter() {
         return new RemoteIpFilter();
@@ -23,10 +25,10 @@ public class WebConfiguration {
     public FilterRegistrationBean testFilterRegistration() {
         FilterRegistrationBean registration = new FilterRegistrationBean();
         registration.setFilter(new MyFilter());
-        registration.addUrlPatterns("/*");
+        registration.addUrlPatterns("/*"); //可不设置，默认过滤路径即为：/*
         registration.addInitParameter("paramName", "paramValue");
         registration.setName("MyFilter");
-        registration.setOrder(1);
+        registration.setOrder(1); //过滤器的注册顺序
         return registration;
     }
 
@@ -37,8 +39,7 @@ public class WebConfiguration {
         }
 
         @Override
-        public void doFilter(ServletRequest srequest, ServletResponse sresponse, FilterChain filterChain)
-                throws IOException, ServletException {
+        public void doFilter(ServletRequest srequest, ServletResponse sresponse, FilterChain filterChain) throws IOException, ServletException {
             // TODO Auto-generated method stub
             HttpServletRequest request = (HttpServletRequest) srequest;
             System.out.println("this is MyFilter,url :" + request.getRequestURI());
