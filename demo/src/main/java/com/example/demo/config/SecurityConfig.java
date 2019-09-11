@@ -19,7 +19,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
  */
 @Configuration
 @EnableWebSecurity // 开启web安全
-@EnableGlobalMethodSecurity(prePostEnabled = true) // 开启全局方法级安全
+@EnableGlobalMethodSecurity(prePostEnabled = true) // 开启全局方法级安全(启用表达式注解)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
@@ -43,14 +43,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
+                .authorizeRequests()
+                .antMatchers("/admin/**").authenticated()
+                .anyRequest().permitAll()
 
-            .authorizeRequests()
-            .antMatchers("/admin/**").authenticated()
-            .anyRequest().permitAll()
-
-            .and().formLogin()
-            .loginPage("/login_p").loginProcessingUrl("/login")
-            .usernameParameter("username").passwordParameter("password").permitAll();
+                .and().formLogin()
+                .loginPage("/login_p").loginProcessingUrl("/login")
+                .usernameParameter("username")
+                .passwordParameter("password").permitAll();
     }
 
 }
