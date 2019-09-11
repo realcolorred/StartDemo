@@ -15,7 +15,7 @@ import java.io.IOException;
 * */
 @Configuration
 public class FilterConfiguration {
-    
+
     @Bean
     public RemoteIpFilter remoteIpFilter() {
         return new RemoteIpFilter();

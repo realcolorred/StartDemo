@@ -1,6 +1,6 @@
 package com.example.demo;
 
-import com.example.demo.service.IMyService;
+import com.example.demo.service.IServantService;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -37,8 +37,7 @@ public class SpringTest {
     public void classPathXmlApplicationContextTest() {
         // 从classpath获取配置文件
         ApplicationContext context = new ClassPathXmlApplicationContext("helloworld.xml");
-        IMyService service = context.getBean("hello", IMyService.class);
-        service.getMyFixLogDefault();
+        IServantService service = context.getBean("hello", IServantService.class);
     }
 
     @Test

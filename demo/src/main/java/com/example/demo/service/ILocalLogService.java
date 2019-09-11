@@ -4,9 +4,10 @@ import com.example.demo.entity.DblogEntity;
 
 import java.util.List;
 
-public interface IMyService {
-
-    public int insertServant(String name);
+/**
+ * Created by lenovo on 2019/9/11.
+ */
+public interface ILocalLogService {
 
     public DblogEntity getMyFixLogOfOne(Long id);
 
