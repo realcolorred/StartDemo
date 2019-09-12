@@ -1,5 +1,10 @@
 package com.example.demo.bean;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class User {
 
     private String userName;
@@ -13,21 +18,5 @@ public class User {
         this.userName = userName;
         this.passWord = passWord;
 
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getPassWord() {
-        return passWord;
-    }
-
-    public void setPassWord(String passWord) {
-        this.passWord = passWord;
     }
 }
