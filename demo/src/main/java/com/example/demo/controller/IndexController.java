@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Date;
 
 /**
- * Created on 2019/9/10.
+ * Created 冷萝卜 on 2019/9/10.
  */
 @RestController
 @RequestMapping("/")
@@ -19,6 +19,6 @@ public class IndexController {
     }
 
     private String getHello() {
-        return "项目启动成功,现在的时间是" + DateHelper.toString(new Date(), DateHelper.YYYYMMDDHHMMSS_read);
+        return "启动成功,现在的时间是" + DateHelper.toString(new Date(), DateHelper.YYYYMMDDHHMMSS_read);
     }
 }

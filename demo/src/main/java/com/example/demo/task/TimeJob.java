@@ -6,8 +6,6 @@ import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.springframework.stereotype.Component;
 
-import java.util.Date;
-
 /**
  * Created by lenovo on 2019/9/12.
  */

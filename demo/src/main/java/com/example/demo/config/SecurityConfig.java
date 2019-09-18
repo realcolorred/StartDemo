@@ -37,7 +37,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/index.html", "/static/**");
+        // web.ignoring().antMatchers("/index.html", "/static/**");
     }
 
     @Override
@@ -50,27 +50,29 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .antMatchers("/admin/**").hasRole("ADMIN") //
             .anyRequest().permitAll(); //
 
+        /*
         httpSecurity.formLogin() // 登录表单
             .loginPage("/login_p").loginProcessingUrl("/login") //
             .usernameParameter("username").passwordParameter("password") //
             .failureHandler((httpServletRequest, httpServletResponse, e) -> {
                 httpServletResponse.setContentType("application/json;charset=utf-8");
                 PrintWriter out = httpServletResponse.getWriter();
-                out.write(JSON.toJSONString(new MyResponseBean(401, "登录失败")));
+                out.write(JSON.toJSONString(new MyResponseBean(401, "登录失败!")));
                 out.flush();
                 out.close();
             }) //
             .successHandler((httpServletRequest, httpServletResponse, authentication) -> {
                 PrintWriter out = httpServletResponse.getWriter();
-                out.write(JSON.toJSONString(new MyResponseBean(200, "登录成功")));
+                out.write(JSON.toJSONString(new MyResponseBean(200, "登录成功!")));
                 out.flush();
                 out.close();
             });
+        */
 
         httpSecurity.logout() // 登出消息
             .logoutSuccessHandler(((request, response, authentication) -> {
                 PrintWriter out = response.getWriter();
-                out.write(JSON.toJSONString(new MyResponseBean(200, "退出成功", authentication)));
+                out.write(JSON.toJSONString(new MyResponseBean(200, "退出成功!", authentication)));
                 out.flush();
                 out.close();
             }));
@@ -80,7 +82,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 response.setContentType("application/json;charset=utf-8");
                 response.setStatus(HttpServletResponse.SC_FORBIDDEN);
                 PrintWriter out = response.getWriter();
-                out.write(JSON.toJSONString(new MyResponseBean(403, "权限不足")));
+                out.write(JSON.toJSONString(new MyResponseBean(403, "权限不足!")));
                 out.flush();
                 out.close();
             });
@@ -90,7 +92,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 response.setContentType("application/json;charset=utf-8");
                 response.setStatus(HttpServletResponse.SC_FORBIDDEN);
                 PrintWriter out = response.getWriter();
-                out.write(JSON.toJSONString(new MyResponseBean(403, "未登录")));
+                out.write(JSON.toJSONString(new MyResponseBean(403, "未登录!")));
                 out.flush();
                 out.close();
             });
