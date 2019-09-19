@@ -4,6 +4,8 @@ import com.example.demo.dao.sourceCompany.MyFixLogMapper;
 import com.example.demo.entity.DblogEntity;
 import com.example.demo.service.ILocalLogService;
 import com.example.demo.util.NumberHelper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,8 @@ import java.util.List;
  */
 @Service
 public class LocalLogServiceImpl implements ILocalLogService {
+
+    protected Logger logger = LoggerFactory.getLogger(getClass());
 
     @Autowired
     private MyFixLogMapper myFixLogMapper;
