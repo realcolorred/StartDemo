@@ -24,8 +24,9 @@ public class RedBlackTree<T extends Comparable> {
         // 将 “y的左孩子” 设为 “x的右孩子”；
         // 如果y的左孩子非空，将 “x” 设为 “y的左孩子的父亲”
         x.right = y.left;
-        if (y.left != null)
+        if (y.left != null) {
             y.left.parent = x;
+        }
 
         // 将 “x的父亲” 设为 “y的父亲”
         y.parent = x.parent;
@@ -33,10 +34,11 @@ public class RedBlackTree<T extends Comparable> {
         if (x.parent == null) {
             this.mRoot = y;            // 如果 “x的父亲” 是空节点，则将y设为根节点
         } else {
-            if (x.parent.left == x)
+            if (x.parent.left == x) {
                 x.parent.left = y;    // 如果 x是它父节点的左孩子，则将y设为“x的父节点的左孩子”
-            else
+            } else {
                 x.parent.right = y;    // 如果 x是它父节点的左孩子，则将y设为“x的父节点的左孩子”
+            }
         }
 
         // 将 “x” 设为 “y的左孩子”
@@ -52,8 +54,9 @@ public class RedBlackTree<T extends Comparable> {
         // 将 “x的右孩子” 设为 “y的左孩子”；
         // 如果"x的右孩子"不为空的话，将 “y” 设为 “x的右孩子的父亲”
         y.left = x.right;
-        if (x.right != null)
+        if (x.right != null) {
             x.right.parent = y;
+        }
 
         // 将 “y的父亲” 设为 “x的父亲”
         x.parent = y.parent;
@@ -61,10 +64,11 @@ public class RedBlackTree<T extends Comparable> {
         if (y.parent == null) {
             this.mRoot = x;            // 如果 “y的父亲” 是空节点，则将x设为根节点
         } else {
-            if (y == y.parent.right)
+            if (y == y.parent.right) {
                 y.parent.right = x;    // 如果 y是它父节点的右孩子，则将x设为“y的父节点的右孩子”
-            else
+            } else {
                 y.parent.left = x;    // (y是它父节点的左孩子) 将x设为“x的父节点的左孩子”
+            }
         }
 
         // 将 “y” 设为 “x的右孩子”

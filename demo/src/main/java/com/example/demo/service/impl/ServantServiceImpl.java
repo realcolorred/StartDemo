@@ -18,6 +18,7 @@ public class ServantServiceImpl implements IServantService {
     @Autowired
     private ServantMapper servantMapper;
 
+    @Override
     public int insertServant(String name) {
         int ret = 0;
         if (StringHelper.isNotEmpty(name)) {

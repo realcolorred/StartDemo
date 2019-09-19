@@ -89,7 +89,7 @@ public class RSABase {
     /**
      * 解密
      * @param str
-     * @param publicKey
+     * @param key
      * @return
      */
     protected static String decrypt(String str, Key key) throws Exception {

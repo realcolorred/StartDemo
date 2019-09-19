@@ -10,7 +10,7 @@ public class UUIDUtil {
     public static String getUUID() {
         return uuid32(UUID.randomUUID());
     }
-
+    
     private static String uuid32(UUID uuid) {
         long msb = uuid.getMostSignificantBits();
         long lsb = uuid.getLeastSignificantBits();

@@ -14,11 +14,15 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class BinaryJedisFactory {
 
+    private static final String CLUSTER = "cluster"; // 缓存类型 : 集群
+    private static final String POOL    = "pool"; // 缓存类型 : 缓存池
+    private static final String CTG     = "ctg"; // 缓存类型 : 集团缓存
+
     // 储存各种不同的缓存对象, 根据key值获取(不存在则初始化)不同的缓存对象
-    private static final Map<String, IBinaryJedis> jedisCache = new ConcurrentHashMap<String, IBinaryJedis>();
+    private static final Map<String, IBinaryJedis> JEDIS_CACHE = new ConcurrentHashMap<String, IBinaryJedis>();
 
     public static IBinaryJedis getJedis(String redisKey) {
-        IBinaryJedis binaryJedis = jedisCache.get(redisKey);
+        IBinaryJedis binaryJedis = JEDIS_CACHE.get(redisKey);
         if (binaryJedis != null) {
             return binaryJedis;
         }
@@ -31,24 +35,24 @@ public class BinaryJedisFactory {
 
     private static IBinaryJedis initJedis(String redisKey, Properties props) {
         IBinaryJedis jedis;
-        synchronized (jedisCache) {
-            jedis = jedisCache.get(redisKey);
+        synchronized (JEDIS_CACHE) {
+            jedis = JEDIS_CACHE.get(redisKey);
             if (jedis != null) {
                 return jedis;
             }
 
             String jedisClass = props.getProperty("jedis-class"); // 缓存类型
-            if ("cluster".equals(jedisClass)) {
+            if (CLUSTER.equals(jedisClass)) {
                 jedis = new BinaryJedisCluster(PropertyUtil.getProperties(props, "jedis-cluster.")); // 集群
-            } else if ("pool".equals(jedisClass)) {
+            } else if (POOL.equals(jedisClass)) {
                 jedis = new BinaryJedisPool(PropertyUtil.getProperties(props, "jedis-pool."));
-            } else if ("ctg".equals(jedisClass)) {
+            } else if (CTG.equals(jedisClass)) {
                 //jedis = new BinaryJedisCtg(PropertyUtil.getProperties(props, "jedis-ctg."));
             } else {
                 return null;
             }
             System.out.println("创建了一个新的缓存对象:" + jedisClass);
-            jedisCache.put(redisKey, jedis);
+            JEDIS_CACHE.put(redisKey, jedis);
         }
         return jedis;
     }
