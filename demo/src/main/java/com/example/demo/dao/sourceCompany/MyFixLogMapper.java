@@ -9,7 +9,6 @@ import java.util.List;
 /**
  * Created by lenovo on 2019/3/22.
  */
-@Repository("myFixLogMapper")
 public interface MyFixLogMapper {
 
     @Select("select * from dblog where create_date > DATE_ADD(now(),INTERVAL - 300 day) ORDER BY create_date desc limit 100 ")

@@ -18,14 +18,12 @@ import java.util.List;
 @Service
 public class LocalLogServiceImpl implements ILocalLogService {
 
-    protected Logger logger = LoggerFactory.getLogger(getClass());
-
     @Autowired
     private MyFixLogMapper myFixLogMapper;
 
     @Override
     public DblogEntity getMyFixLogOfOne(Long id) {
-        if (NumberHelper.isVaildLong(id)) {
+        if (NumberHelper.isVaildNum(id)) {
             return myFixLogMapper.getOne(id);
         }
         return null;

@@ -5,8 +5,16 @@ package com.example.demo.util;
  */
 public class NumberHelper {
 
-    public static boolean isVaildLong(Long num) {
+    public static boolean isVaildNum(Long num) {
         return num != null && num > 0;
+    }
+
+    public static boolean isVaildNum(Integer num) {
+        return num != null && num > 0;
+    }
+
+    public static int toInt(String str) {
+        return toInt(str, 0);
     }
 
     public static int toInt(String str, int defaultValue) {

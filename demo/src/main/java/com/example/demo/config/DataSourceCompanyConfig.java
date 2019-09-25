@@ -19,7 +19,7 @@ import javax.sql.DataSource;
  * 建立company-pc数据库的连接
  */
 @Configuration
-@MapperScan(basePackages = "com.example.demo.dao.sourceCompany",     // mybatis-basePackages : 包扫描
+@MapperScan(basePackages = { "com.example.demo.dao.sourceCompany" },     // mybatis-basePackages : 包扫描
     sqlSessionTemplateRef = "companySqlSessionTemplate")             // mybatis-sqlSessionTemplateRef : 引用的sql会话模板
 public class DataSourceCompanyConfig {
 
