@@ -2,6 +2,7 @@ package com.example.demo;
 
 import com.example.demo.bean.KDM;
 import com.example.demo.entity.KingEntity;
+import com.example.demo.util.DateUtil;
 import com.example.demo.util.RSA.RSAEncode;
 import com.example.demo.util.RSA.RSASign;
 import com.example.demo.util.RedisLockUtil;
@@ -14,6 +15,8 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.springframework.util.DigestUtils;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Map;
 
 public class UtilTest {
@@ -29,9 +32,35 @@ public class UtilTest {
     }
 
     @Test
-    public void ValidatorUtil(){
+    public void timetest() {
+        Calendar ca = Calendar.getInstance();
+        ca.set(2019, Calendar.MAY, 1);
+        System.out.println(ca.getTime().getTime());
+        System.out.println(DateUtil.dateToString(ca.getTime(), DateUtil.YYYYMMDDHHMMSS_read) + "\n");
+
+        ca.set(1800, Calendar.MAY, 1);
+        System.out.println(ca.getTime().getTime());
+        System.out.println(DateUtil.dateToString(ca.getTime(), DateUtil.YYYYMMDDHHMMSS_read) + "\n");
+
+        ca.set(100, Calendar.MAY, 1);
+        System.out.println(ca.getTime().getTime());
+        System.out.println(DateUtil.dateToString(ca.getTime(), DateUtil.YYYYMMDDHHMMSS_read) + "\n");
+
+        ca.set(-100, Calendar.MAY, 1);
+        System.out.println(ca.getTime().getTime());
+        System.out.println(DateUtil.dateToString(ca.getTime(), DateUtil.YYYYMMDDHHMMSS_read) + "\n");
+
+        System.out.println(DateUtil.dateToString(new Date(0), DateUtil.YYYYMMDDHHMMSS_read) + "\n");
+
+        long mill = DateUtil.getTimes("1918/05/03");
+        System.out.println(mill);
+        System.out.println(DateUtil.dateToString(new Date(mill), DateUtil.YYYYMMDDHHMMSS_read));
+    }
+
+    @Test
+    public void ValidatorUtil() {
         KingEntity entity = new KingEntity();
-        entity.setAge(11100);
+        entity.setAge(11100L);
         entity.setBirthday("-2019/11/1");
         System.out.println(ValidatorUtil.validate(entity));
     }
@@ -75,8 +104,8 @@ public class UtilTest {
         KDM kdm = new KDM();
         kdm.setPubStr("这个是许可,生失效时间为:20190101-20200101");
         kdm.setPriStr(RSAEncode.encrypt("key," + key + ",effexpDate,20190101-20200101", publicKeyMac));
-        kdm.setSign(RSASign
-            .sign("开发方签名,公开部分和加密部分的md5值为:" + DigestUtils.md5DigestAsHex((kdm.getPubStr() + kdm.getPriStr()).getBytes()), privateKeySignDev));
+        kdm.setSign(
+            RSASign.sign("开发方签名,公开部分和加密部分的md5值为:" + DigestUtils.md5DigestAsHex((kdm.getPubStr() + kdm.getPriStr()).getBytes()), privateKeySignDev));
         System.out.println("发行方根据影院机器的公钥制作了一份KMD:" + kdm.toString());
         System.out.println("发行方签名公钥为:" + publicKeySignDev);
 

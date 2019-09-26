@@ -64,7 +64,7 @@ public class PropertyUtil {
      * @return 如果键存在返回键值，否则返回默认值(int)
      */
     public static int getProperty(Properties props, String key, int defaultValue) {
-        return NumberHelper.toInt(props.getProperty(key), defaultValue);
+        return NumberUtil.toInt(props.getProperty(key), defaultValue);
     }
 
     /**

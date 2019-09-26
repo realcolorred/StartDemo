@@ -2,12 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.demo.dao.sourceCompany.KingMgrMapper">
 
-    <select id="getList" resultType="com.example.demo.entity.KingEntity">
-        select * from king limit 1000;
-    </select>
+    <insert id="insert" parameterType="com.example.demo.entity.KingEntity">
+        INSERT INTO king(king_name, king_name2, birthday, deathday, age, rule_start, rule_end, rule_time, rule_start_int)
+        VALUES (#{kingName}, #{kingName2}, #{birthday},#{deathday},#{age},#{ruleStart},#{ruleEnd},#{ruleTime},#{ruleStartInt})
+    </insert>
 
     <update id="update" parameterType="com.example.demo.entity.KingEntity">
-        update king
+        UPDATE king
         <set>
             <if test="kingName != null">
                 kingName = #{kingName},
@@ -18,8 +19,8 @@
             <if test="birthday != null">
                 birthday = #{birthday},
             </if>
-            <if test="dieday != null">
-                dieday = #{dieday},
+            <if test="deathday != null">
+                deathday = #{deathday},
             </if>
             <if test="age != null">
                 age = #{age},
@@ -37,7 +38,7 @@
                 rule_start_int = #{ruleStartInt},
             </if>
         </set>
-        where id = #{id}
+        WHERE id = #{id}
     </update>
 
 </mapper>

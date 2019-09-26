@@ -14,7 +14,7 @@ public class ValidatorUtil {
 
     private static Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
 
-    public static <T> Map<String, StringBuffer> validate(T obj) {
+    private static <T> Map<String, StringBuffer> validateObj(T obj) {
         Map<String, StringBuffer> errorMap = null;
         Set<ConstraintViolation<T>> set = validator.validate(obj);
         if (set != null && set.size() > 0) {
@@ -33,5 +33,18 @@ public class ValidatorUtil {
             }
         }
         return errorMap;
+    }
+
+    public static <T> String validate(T obj) {
+        Map<String, StringBuffer> msg = validateObj(obj);
+        if (msg == null) {
+            return null;
+        } else {
+            return msg.toString();
+        }
+    }
+
+    public static <T> boolean validatePass(T obj) {
+        return validateObj(obj) == null;
     }
 }

@@ -1,10 +1,12 @@
 package com.example.demo.task;
 
-import com.example.demo.util.DateHelper;
+import com.example.demo.util.DateUtil;
 import org.quartz.DisallowConcurrentExecution;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.springframework.stereotype.Component;
+
+import java.util.Date;
 
 /**
  * Created by lenovo on 2019/9/12.
@@ -15,6 +17,6 @@ public class TimeJob extends BaseJob {
 
     @Override
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
-        logger.info("测试定时任务启动,现在的时间是" + DateHelper.getCurrentTimeRead());
+        logger.info("测试定时任务启动,现在的时间是" + DateUtil.dateToString(new Date(), DateUtil.YYYYMMDDHHMMSS_read));
     }
 }

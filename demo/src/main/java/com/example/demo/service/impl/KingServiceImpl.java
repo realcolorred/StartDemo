@@ -2,11 +2,10 @@ package com.example.demo.service.impl;
 
 import com.example.demo.dao.sourceCompany.KingMgrMapper;
 import com.example.demo.entity.KingEntity;
+import com.example.demo.service.BaseService;
 import com.example.demo.service.IKingService;
-import com.example.demo.util.CollectionHelper;
-import com.example.demo.util.DateHelper;
-import com.example.demo.util.NumberHelper;
-import com.example.demo.util.StringHelper;
+import com.example.demo.util.DateUtil;
+import com.example.demo.util.ValidatorUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +15,7 @@ import java.util.List;
  * Created by lenovo on 2019/9/25.
  */
 @Service
-public class KingServiceImpl implements IKingService {
+public class KingServiceImpl extends BaseService implements IKingService {
 
     @Autowired
     private KingMgrMapper kingMgrMapper;
@@ -28,28 +27,50 @@ public class KingServiceImpl implements IKingService {
 
     @Override
     public int updateKing(KingEntity entity) {
-        if (!NumberHelper.isVaildNum(entity.getId()))
+        if (!isVaildNum(entity.getId()))
             return 0;
 
         return kingMgrMapper.update(entity);
     }
 
     @Override
-    public int formatDate() {
+    public int insertKing(KingEntity entity) {
+        String msg = ValidatorUtil.validate(entity);
+        if (isNotEmpty(msg)) {
+            logger.error("新增数据:" + entity + ",不合法:" + msg);
+            return -1;
+        }
+        if (isEmpty(entity.getKingName())) {
+            logger.error("新增数据不合法:" + entity);
+            return -1;
+        }
+
+        if (!isVaildNum(entity.getRuleStartInt()) && isNotEmpty(entity.getRuleStart())) {
+            entity.setRuleStartInt(DateUtil.getTimes(entity.getRuleStart()));
+        }
+        fillEmptyBean(entity);
+        return kingMgrMapper.insert(entity);
+    }
+
+    @Override
+    public int formatData() {
         List<KingEntity> list = kingMgrMapper.getList();
-        if (CollectionHelper.isNotEmpty(list)) {
+        if (isNotEmpty(list)) {
             for (KingEntity entity : list) {
                 KingEntity newEntity = new KingEntity();
                 newEntity.setId(entity.getId());
-                if (StringHelper.isNotEmpty(entity.getRuleStart())) {
-                    newEntity.setRuleStartInt(DateHelper.getDayOfTime(entity.getRuleStart()));
+                if (isNotEmpty(entity.getRuleStart())) {
+                    newEntity.setRuleStartInt(DateUtil.getTimes(entity.getRuleStart()));
                 }
-                if (StringHelper.isNotEmpty(entity.getRuleStart()) && StringHelper.isNotEmpty(entity.getRuleEnd())) {
-                    newEntity.setRuleTime(DateHelper.getYearBetween(entity.getRuleStart(), entity.getRuleEnd()));
+                if (isNotEmpty(entity.getRuleStart()) && isNotEmpty(entity.getRuleEnd())) {
+                    newEntity.setRuleTime(DateUtil.getYearBetween(entity.getRuleStart(), entity.getRuleEnd()));
+                }
+                if (isNotEmpty(entity.getBirthday()) && isNotEmpty(entity.getDeathday())) {
+                    newEntity.setAge(DateUtil.getYearBetween(entity.getBirthday(), entity.getDeathday()));
                 }
                 kingMgrMapper.update(newEntity);
             }
-            return 1;
+            return list.size();
         }
         return 0;
     }

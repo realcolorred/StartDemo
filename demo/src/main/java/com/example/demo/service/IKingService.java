@@ -13,5 +13,7 @@ public interface IKingService {
 
     int updateKing(KingEntity entity);
 
-    int formatDate();
+    int insertKing(KingEntity entity);
+
+    int formatData();
 }

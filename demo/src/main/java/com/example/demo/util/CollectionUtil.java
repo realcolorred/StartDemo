@@ -5,13 +5,13 @@ import java.util.Collection;
 /**
  * Created by lenovo on 2019/9/25.
  */
-public class CollectionHelper {
+public class CollectionUtil {
 
     public static boolean isEmpty(Collection<?> collection) {
         return collection == null || collection.isEmpty();
     }
 
     public static boolean isNotEmpty(Collection<?> collection) {
-        return !CollectionHelper.isEmpty(collection);
+        return !CollectionUtil.isEmpty(collection);
     }
 }
