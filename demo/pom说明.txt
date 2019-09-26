@@ -1,0 +1,28 @@
+<optional>
+控制依赖用: 当值为true的时候,说明该依赖是只是一个可选依赖.该依赖只能在本项目中传递,不会传递到引用该项目的父项目中，父项目需要主动引用该依赖才行。
+例:表示当前项目A依赖B,但是依赖项目A的父项目不会主动依赖B
+<dependencies>
+    <dependency>
+      <groupId>sample.ProjectB</groupId>
+      <artifactId>Project-B</artifactId>
+      <version>1.0</version>
+      <scope>compile</scope>
+      <optional>true</optional>
+    </dependency>
+</dependencies>
+
+<exclusion>
+控制依赖用: 排除依赖,不依赖传过来的某些关联依赖.
+例:表示当前项目依赖项目A但是排除依赖项目A传过来的依赖B
+<dependency>
+      <groupId>sample.ProjectA</groupId>
+      <artifactId>Project-A</artifactId>
+      <version>1.0</version>
+      <scope>compile</scope>
+      <exclusions>
+        <exclusion>
+          <groupId>sample.ProjectB</groupId>
+          <artifactId>Project-B</artifactId>
+        </exclusion>
+      </exclusions>
+</dependency>
