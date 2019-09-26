@@ -27,9 +27,9 @@ public class KingServiceImpl extends BaseService implements IKingService {
 
     @Override
     public int updateKing(KingEntity entity) {
-        if (!isVaildNum(entity.getId()))
+        if (!isVaildNum(entity.getId())){
             return 0;
-
+        }
         return kingMgrMapper.update(entity);
     }
 
