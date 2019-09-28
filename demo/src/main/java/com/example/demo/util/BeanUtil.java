@@ -11,10 +11,12 @@ public class BeanUtil {
         Class userCla = (Class) obj.getClass();
         Field[] fs = userCla.getDeclaredFields();
         for (Field f : fs) {
-            f.setAccessible(true); // 设置些属性是可以访问的
+            // 设置些属性是可以访问的
+            f.setAccessible(true);
             Object val;
             try {
-                val = f.get(obj); // 得到此属性的值
+                // 得到此属性的值
+                val = f.get(obj);
                 if (val == null) {
                     if (Long.class == f.getType()) {
                         f.set(obj, 0L);

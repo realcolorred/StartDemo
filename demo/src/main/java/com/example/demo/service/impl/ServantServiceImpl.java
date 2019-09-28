@@ -1,13 +1,14 @@
 package com.example.demo.service.impl;
 
 import com.example.demo.dao.sourceHome.ServantMapper;
+import com.example.demo.service.BaseService;
 import com.example.demo.service.IServantService;
 import com.example.demo.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ServantServiceImpl implements IServantService {
+public class ServantServiceImpl extends BaseService implements IServantService {
 
     @Autowired
     private ServantMapper servantMapper;

@@ -12,9 +12,9 @@ import java.util.Collection;
 /**
  * Created by lenovo on 2019/9/26.
  */
-public class BaseService {
+public abstract class BaseService {
 
-    protected Logger logger = LoggerFactory.getLogger(this.getClass());
+    protected  Logger logger = LoggerFactory.getLogger(this.getClass());
 
     protected boolean isEmpty(String str) {
         return StringUtil.isEmpty(str);

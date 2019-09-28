@@ -28,7 +28,6 @@ public class DataSourceHomeConfig {
     }
 
     @Bean(name = "homeSqlSessionFactory")
-    @Primary
     public SqlSessionFactory sqlSessionFactory(@Qualifier("homeDataSource") DataSource dataSource) throws Exception {
         SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
         bean.setDataSource(dataSource);
@@ -37,13 +36,11 @@ public class DataSourceHomeConfig {
     }
 
     @Bean(name = "homeTransactionManager")
-    @Primary
     public DataSourceTransactionManager transactionManager(@Qualifier("homeDataSource") DataSource dataSource) {
         return new DataSourceTransactionManager(dataSource);
     }
 
     @Bean(name = "homeSqlSessionTemplate")
-    @Primary
     public SqlSessionTemplate sqlSessionTemplate(@Qualifier("homeSqlSessionFactory") SqlSessionFactory sqlSessionFactory) throws Exception {
         SqlSessionTemplate tmp = new SqlSessionTemplate(sqlSessionFactory);
         tmp.getConfiguration().setMapUnderscoreToCamelCase(true);
