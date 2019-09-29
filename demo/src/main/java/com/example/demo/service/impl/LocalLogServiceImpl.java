@@ -2,9 +2,7 @@ package com.example.demo.service.impl;
 
 import com.example.demo.dao.sourceCompany.MyFixLogMapper;
 import com.example.demo.entity.DblogEntity;
-import com.example.demo.service.BaseService;
 import com.example.demo.service.ILocalLogService;
-import com.example.demo.util.NumberUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

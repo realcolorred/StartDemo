@@ -1,9 +1,7 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.dao.sourceHome.ServantMapper;
-import com.example.demo.service.BaseService;
+import com.example.demo.dao.sourceCompany.ServantMapper;
 import com.example.demo.service.IServantService;
-import com.example.demo.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +14,7 @@ public class ServantServiceImpl extends BaseService implements IServantService {
     @Override
     public int insertServant(String name) {
         int ret = 0;
-        if (StringUtil.isNotEmpty(name)) {
+        if (isNotEmpty(name)) {
             ret += servantMapper.insert(name);
         }
         return ret;

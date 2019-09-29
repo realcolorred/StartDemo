@@ -86,7 +86,7 @@ public class DataSourceCompanyConfig {
         requiredTx.setRollbackRules(Collections.singletonList(new RollbackRuleAttribute(Throwable.class)));
         // 如果当前没有事务，就新建一个事务，如果已经存在一个事务中，加入到这个事务中
         requiredTx.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
-        // 超时时间: 50000ms
+        // 超时时间: 50s
         requiredTx.setTimeout(50000);
 
         Map<String, TransactionAttribute> txMap = new HashMap<>();
@@ -107,9 +107,9 @@ public class DataSourceCompanyConfig {
          * https://blog.csdn.net/sunlihuo/article/details/52701548
          */
 
-        // 设置事务切入点为: BaseService基类(所有BaseService的子类都会被注入事务) TODO 存在问题,未实现.
+        // 设置事务切入点为: BaseService基类(所有BaseService的子类都会被注入事务)
         AspectJExpressionPointcut pointcut = new AspectJExpressionPointcut();
-        pointcut.setExpression("this(com.example.demo.service.BaseService)");
+        pointcut.setExpression("this(com.example.demo.service.impl.BaseService)");
         return new DefaultPointcutAdvisor(pointcut, transactionInterceptor);
     }
 

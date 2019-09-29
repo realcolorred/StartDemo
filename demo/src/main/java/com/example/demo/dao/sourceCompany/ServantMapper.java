@@ -1,4 +1,4 @@
-package com.example.demo.dao.sourceHome;
+package com.example.demo.dao.sourceCompany;
 
 import com.example.demo.entity.ServantEntity;
 import org.apache.ibatis.annotations.*;
