@@ -2,6 +2,8 @@ package com.example.demo.util.redis;
 
 import com.example.demo.util.PropertyUtil;
 import com.example.demo.util.redis.command.IBinaryJedis;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Map;
 import java.util.Properties;
@@ -13,6 +15,8 @@ import java.util.concurrent.ConcurrentHashMap;
  * 二进制缓存工厂
  */
 public class BinaryJedisFactory {
+
+    protected static final Logger logger = LoggerFactory.getLogger(BinaryJedisFactory.class);
 
     private static final String CLUSTER = "cluster"; // 缓存类型 : 集群
     private static final String POOL    = "pool"; // 缓存类型 : 缓存池
@@ -51,7 +55,7 @@ public class BinaryJedisFactory {
             } else {
                 return null;
             }
-            System.out.println("创建了一个新的缓存对象:" + jedisClass);
+            logger.info("创建了一个新的缓存对象:" + jedisClass);
             JEDIS_CACHE.put(redisKey, jedis);
         }
         return jedis;

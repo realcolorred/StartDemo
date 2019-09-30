@@ -1,8 +1,6 @@
 package com.example.demo.controller;
 
-import com.example.demo.service.IServantService;
 import com.example.demo.util.DateUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -15,10 +13,7 @@ import java.util.Date;
 @RequestMapping("/")
 public class IndexController {
 
-    @Autowired
-    private IServantService servantService;
-
-    @RequestMapping("/")
+    @RequestMapping({ "/", "" })
     public String index() {
         return getHello();
     }

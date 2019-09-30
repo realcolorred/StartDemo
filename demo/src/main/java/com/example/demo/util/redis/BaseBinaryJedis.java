@@ -3,6 +3,8 @@ package com.example.demo.util.redis;
 import com.example.demo.constants.SysConstants;
 import com.example.demo.util.PropertyUtil;
 import com.example.demo.util.redis.command.IBinaryJedis;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPoolConfig;
 
@@ -16,6 +18,8 @@ import java.util.Random;
  * IdclogRedis存储涉及的redis二进制命令的基类
  */
 public abstract class BaseBinaryJedis implements IBinaryJedis {
+
+    protected static final Logger logger = LoggerFactory.getLogger(BaseBinaryJedis.class);
 
     private static final long MILLI_NANO_TIME = 1000 * 1000L;   //纳秒和毫秒之间的转换率
 
@@ -52,7 +56,7 @@ public abstract class BaseBinaryJedis implements IBinaryJedis {
                 Thread.sleep(3, RANDOM.nextInt(30));
             }
         } catch (Throwable t) {
-            //todo logger.error("redis lock error!", t);
+            logger.error("redis lock error!", t);
         }
         return new RedisLock(key, value, false);
     }

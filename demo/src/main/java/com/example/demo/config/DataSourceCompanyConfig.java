@@ -30,8 +30,8 @@ import java.util.Map;
  * 3 设置会话管理
  */
 @Configuration
-@MapperScan(basePackages = {"com.example.demo.dao.sourceCompany"},     // mybatis-basePackages : 包扫描
-        sqlSessionTemplateRef = "companySqlSessionTemplate")             // mybatis-sqlSessionTemplateRef : 引用的sql会话模板
+@MapperScan(basePackages = { "com.example.demo.dao.sourceCompany" },     // mybatis-basePackages : 包扫描
+    sqlSessionTemplateRef = "companySqlSessionTemplate")             // mybatis-sqlSessionTemplateRef : 引用的sql会话模板
 public class DataSourceCompanyConfig {
 
     /**
@@ -89,12 +89,18 @@ public class DataSourceCompanyConfig {
         // 超时时间: 50s
         requiredTx.setTimeout(50000);
 
+        RuleBasedTransactionAttribute independentTx = new RuleBasedTransactionAttribute();
+        independentTx.setRollbackRules(Collections.singletonList(new RollbackRuleAttribute(Throwable.class)));
+        independentTx.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
+        independentTx.setTimeout(50000);
+
         Map<String, TransactionAttribute> txMap = new HashMap<>();
         txMap.put("get*", readOnlyTx);
         txMap.put("query*", readOnlyTx);
         txMap.put("qry*", readOnlyTx);
         txMap.put("find*", readOnlyTx);
         txMap.put("*", requiredTx);
+        txMap.put("independent*", independentTx);
 
         NameMatchTransactionAttributeSource nameMatchTransactionAttributeSource = new NameMatchTransactionAttributeSource();
         nameMatchTransactionAttributeSource.setNameMap(txMap);

@@ -1,6 +1,8 @@
 package com.example.demo.config;
 
 import org.apache.catalina.filters.RemoteIpFilter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,6 +17,8 @@ import java.io.IOException;
 * */
 @Configuration
 public class FilterConfiguration {
+
+    protected static final Logger logger = LoggerFactory.getLogger(FilterConfiguration.class);
 
     @Bean
     public RemoteIpFilter remoteIpFilter() {
@@ -42,7 +46,7 @@ public class FilterConfiguration {
         public void doFilter(ServletRequest srequest, ServletResponse sresponse, FilterChain filterChain) throws IOException, ServletException {
             // TODO Auto-generated method stub
             HttpServletRequest request = (HttpServletRequest) srequest;
-            System.out.println("this is MyFilter,url :" + request.getRequestURI());
+            logger.info("this is MyFilter,url :" + request.getRequestURI());
             filterChain.doFilter(srequest, sresponse);
         }
 

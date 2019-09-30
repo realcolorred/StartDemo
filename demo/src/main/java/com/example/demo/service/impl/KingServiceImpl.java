@@ -36,11 +36,11 @@ public class KingServiceImpl extends BaseService implements IKingService {
     public int insertKing(KingEntity entity) {
         String msg = ValidatorUtil.validate(entity);
         if (isNotEmpty(msg)) {
-            logger.error("新增数据:" + entity + ",不合法:" + msg);
+            logger.warn("新增数据:" + entity + ",不合法:" + msg);
             return -1;
         }
         if (isEmpty(entity.getKingName())) {
-            logger.error("新增数据不合法:" + entity);
+            logger.warn("新增数据不合法:" + entity);
             return -1;
         }
 

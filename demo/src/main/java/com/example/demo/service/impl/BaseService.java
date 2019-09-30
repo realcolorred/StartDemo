@@ -14,7 +14,7 @@ import java.util.Collection;
  */
 public abstract class BaseService {
 
-    protected  Logger logger = LoggerFactory.getLogger(this.getClass());
+    protected Logger logger = LoggerFactory.getLogger(this.getClass());
 
     protected boolean isEmpty(String str) {
         return StringUtil.isEmpty(str);
