@@ -1,6 +1,6 @@
 package com.example.demo.util.redis.command;
 
-import com.example.demo.util.redis.RedisLock;
+import com.example.demo.util.redis.bo.RedisLockBo;
 
 /**
  * Created by realcolorred on 2019/3/12.
@@ -16,12 +16,12 @@ public interface ILockCommand {
      * @param expire 分布式锁中分组的key的过期时间，过期后锁将失效(秒)
      * @return 缓存锁
      */
-    public RedisLock lock(String key, String value, long timeout, int expire);
+    public RedisLockBo lock(String key, String value, long timeout, int expire);
 
     /**
      * 解锁
      * @param redisLock 缓存锁
      * @return 成功 or 失败
      */
-    public boolean ulock(RedisLock redisLock);
+    public boolean ulock(RedisLockBo redisLock);
 }

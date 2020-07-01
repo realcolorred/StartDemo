@@ -3,7 +3,7 @@ package com.example.demo.util;
 /**
  * Created by realcolorred on 2019/3/12.
  */
-public class NumberUtil {
+public class NumberHelper {
 
     public static boolean isVaildNum(Long num) {
         return num != null && num > 0;

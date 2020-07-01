@@ -1,19 +1,19 @@
-package com.example.demo.util.redis;
+package com.example.demo.util.redis.bo;
 
 /**
  * Created by realcolorred on 2019/3/12.
  */
-public class RedisLock {
+public class RedisLockBo {
 
     private final String  key;  //缓存Key
     private final String  value;//缓存VALUE
     private final boolean lock; //是否锁成功
 
-    public RedisLock(String key, String value) {
+    public RedisLockBo(String key, String value) {
         this(key, value, true);
     }
 
-    public RedisLock(String key, String value, boolean lock) {
+    public RedisLockBo(String key, String value, boolean lock) {
         this.key = key;
         this.value = value;
         this.lock = lock;
@@ -33,7 +33,7 @@ public class RedisLock {
 
     @Override
     public String toString() {
-        return "RedisLock{" +
+        return "RedisLockBo{" +
                 "key='" + key + '\'' +
                 ", value='" + value + '\'' +
                 ", lock=" + lock +

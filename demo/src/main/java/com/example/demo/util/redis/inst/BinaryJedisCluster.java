@@ -1,4 +1,4 @@
-package com.example.demo.util.redis;
+package com.example.demo.util.redis.inst;
 
 import com.example.demo.util.PropertyUtil;
 import redis.clients.jedis.HostAndPort;

@@ -2,18 +2,21 @@ package com.example.demo;
 
 import com.example.demo.bean.KDM;
 import com.example.demo.entity.KingEntity;
-import com.example.demo.util.DateUtil;
+import com.example.demo.util.DateHelper;
 import com.example.demo.util.RSA.RSAEncode;
 import com.example.demo.util.RSA.RSASign;
-import com.example.demo.util.RedisLockUtil;
-import com.example.demo.util.RedisUtil;
+import com.example.demo.util.redis.RedisLockUtil;
+import com.example.demo.util.redis.RedisUtil;
 import com.example.demo.util.UUIDUtil;
 import com.example.demo.util.ValidatorUtil;
-import com.example.demo.util.redis.RedisLock;
+import com.example.demo.util.redis.bo.RedisLockBo;
+import com.example.demo.util.restCilent.RestCilentUtil;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.springframework.http.ResponseEntity;
 import org.springframework.util.DigestUtils;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -32,29 +35,39 @@ public class UtilTest {
     }
 
     @Test
+    public void restClientTest() {
+        String name = "testMethod";
+        RestTemplate restTemplate = RestCilentUtil.getRestCilent(name);
+        ResponseEntity<String> responseEntity = restTemplate.getForEntity("https://www.baidu.com/s/123", String.class);
+        System.out.println(responseEntity.getStatusCode());
+        System.out.println(responseEntity.getHeaders());
+        System.out.println(responseEntity.getBody());
+    }
+
+    @Test
     public void timetest() {
         Calendar ca = Calendar.getInstance();
         ca.set(2019, Calendar.MAY, 1);
         System.out.println(ca.getTime().getTime());
-        System.out.println(DateUtil.dateToString(ca.getTime(), DateUtil.YYYYMMDDHHMMSS_read) + "\n");
+        System.out.println(DateHelper.dateToString(ca.getTime(), DateHelper.YYYYMMDDHHMMSS_READ) + "\n");
 
         ca.set(1800, Calendar.MAY, 1);
         System.out.println(ca.getTime().getTime());
-        System.out.println(DateUtil.dateToString(ca.getTime(), DateUtil.YYYYMMDDHHMMSS_read) + "\n");
+        System.out.println(DateHelper.dateToString(ca.getTime(), DateHelper.YYYYMMDDHHMMSS_READ) + "\n");
 
         ca.set(100, Calendar.MAY, 1);
         System.out.println(ca.getTime().getTime());
-        System.out.println(DateUtil.dateToString(ca.getTime(), DateUtil.YYYYMMDDHHMMSS_read) + "\n");
+        System.out.println(DateHelper.dateToString(ca.getTime(), DateHelper.YYYYMMDDHHMMSS_READ) + "\n");
 
         ca.set(-100, Calendar.MAY, 1);
         System.out.println(ca.getTime().getTime());
-        System.out.println(DateUtil.dateToString(ca.getTime(), DateUtil.YYYYMMDDHHMMSS_read) + "\n");
+        System.out.println(DateHelper.dateToString(ca.getTime(), DateHelper.YYYYMMDDHHMMSS_READ) + "\n");
 
-        System.out.println(DateUtil.dateToString(new Date(0), DateUtil.YYYYMMDDHHMMSS_read) + "\n");
+        System.out.println(DateHelper.dateToString(new Date(0), DateHelper.YYYYMMDDHHMMSS_READ) + "\n");
 
-        long mill = DateUtil.getTimes("1918/05/03");
+        long mill = DateHelper.getTimes("1918/05/03");
         System.out.println(mill);
-        System.out.println(DateUtil.dateToString(new Date(mill), DateUtil.YYYYMMDDHHMMSS_read));
+        System.out.println(DateHelper.dateToString(new Date(mill), DateHelper.YYYYMMDDHHMMSS_READ));
     }
 
     @Test
@@ -105,7 +118,7 @@ public class UtilTest {
         kdm.setPubStr("这个是许可,生失效时间为:20190101-20200101");
         kdm.setPriStr(RSAEncode.encrypt("key," + key + ",effexpDate,20190101-20200101", publicKeyMac));
         kdm.setSign(
-            RSASign.sign("开发方签名,公开部分和加密部分的md5值为:" + DigestUtils.md5DigestAsHex((kdm.getPubStr() + kdm.getPriStr()).getBytes()), privateKeySignDev));
+                RSASign.sign("开发方签名,公开部分和加密部分的md5值为:" + DigestUtils.md5DigestAsHex((kdm.getPubStr() + kdm.getPriStr()).getBytes()), privateKeySignDev));
         System.out.println("发行方根据影院机器的公钥制作了一份KMD:" + kdm.toString());
         System.out.println("发行方签名公钥为:" + publicKeySignDev);
 
@@ -175,7 +188,7 @@ public class UtilTest {
     @Test
     public void redisTest() {
         System.out.println(RedisUtil.existKey("test_key"));
-        RedisLock lock = RedisLockUtil.lock("lock1");
+        RedisLockBo lock = RedisLockUtil.lock("lock1");
         System.out.println("锁定结果" + lock);
         System.out.println("解锁结果:" + RedisLockUtil.ulock(lock));
     }

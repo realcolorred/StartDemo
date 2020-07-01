@@ -1,6 +1,6 @@
 package com.example.demo.util;
 
-public class StringUtil {
+public class StringHelper {
 
     public static final String EMPTY = "";
 

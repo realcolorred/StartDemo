@@ -1,6 +1,6 @@
 package com.example.demo.task;
 
-import com.example.demo.util.DateUtil;
+import com.example.demo.util.DateHelper;
 import org.quartz.DisallowConcurrentExecution;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
@@ -17,6 +17,6 @@ public class TimeJob extends BaseJob {
 
     @Override
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
-        logger.info("测试定时任务启动,现在的时间是" + DateUtil.dateToString(new Date(), DateUtil.YYYYMMDDHHMMSS_read));
+        logger.info("测试定时任务启动,现在的时间是" + DateHelper.dateToString(new Date(), DateHelper.YYYYMMDDHHMMSS_READ));
     }
 }

@@ -1,11 +1,8 @@
-package com.example.demo.util;
+package com.example.demo.util.redis;
 
-import com.example.demo.constants.SysConstants;
-import com.example.demo.util.redis.BinaryJedisFactory;
+import com.example.demo.util.redis.factory.BinaryJedisFactory;
 import com.example.demo.constants.RedisConstans;
 import com.example.demo.util.redis.command.IBinaryJedis;
-
-import java.io.UnsupportedEncodingException;
 
 /**
  * Created by lenovo on 2019/3/13.
@@ -13,6 +10,8 @@ import java.io.UnsupportedEncodingException;
 public class RedisUtil {
 
     private static IBinaryJedis binaryJedis;
+
+    private static final String ENCODING = "UTF-8";
 
     private static IBinaryJedis getBinaryJedis() {
         if (binaryJedis != null) {
@@ -33,7 +32,7 @@ public class RedisUtil {
 
     public static boolean existKey(String key) {
         try {
-            return getBinaryJedis().exists(key.getBytes(SysConstants.SYS_ENCODING));
+            return getBinaryJedis().exists(key.getBytes(ENCODING));
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -1,11 +1,10 @@
-package com.example.demo.util.redis;
+package com.example.demo.util.redis.inst;
 
-import com.example.demo.constants.SysConstants;
 import com.example.demo.util.PropertyUtil;
+import com.example.demo.util.redis.bo.RedisLockBo;
 import com.example.demo.util.redis.command.IBinaryJedis;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPoolConfig;
 
 import java.util.Properties;
@@ -22,17 +21,18 @@ public abstract class BaseBinaryJedis implements IBinaryJedis {
     protected static final Logger logger = LoggerFactory.getLogger(BaseBinaryJedis.class);
 
     private static final long MILLI_NANO_TIME = 1000 * 1000L;   //纳秒和毫秒之间的转换率
+    private static final String ENCODING = "UTF-8";
 
     private static final Random RANDOM = new Random();
 
     @Override
-    public RedisLock lock(String key, String value, long timeout, int expire) {
+    public RedisLockBo lock(String key, String value, long timeout, int expire) {
         long startNanoTime = System.nanoTime();
         timeout *= MILLI_NANO_TIME;
 
         try {
-            byte[] keyBytes = key.getBytes(SysConstants.SYS_ENCODING);
-            byte[] valueBytes = value.getBytes(SysConstants.SYS_ENCODING);
+            byte[] keyBytes = key.getBytes(ENCODING);
+            byte[] valueBytes = value.getBytes(ENCODING);
 
             //在timeout的时间范围内不断轮询锁
             while (System.nanoTime() - startNanoTime < timeout) {
@@ -40,15 +40,15 @@ public abstract class BaseBinaryJedis implements IBinaryJedis {
                 Long ret = setnx(keyBytes, valueBytes);//锁不存在的话，设置锁并设置锁过期时间，即加锁
                 if (ret != null && ret == 1) {
                     expire(keyBytes, expire);// 加锁成功 , 为锁设置一个过期时间 (设置锁过期时间是为了在没有释放锁的情况下锁过期后消失，不会造成永久阻塞)
-                    return new RedisLock(key, value, true);
+                    return new RedisLockBo(key, value, true);
                 } else {
                     byte[] retBytes = get(keyBytes);
-                    String retValue = new String(retBytes, SysConstants.SYS_ENCODING);
+                    String retValue = new String(retBytes, ENCODING);
 
                     // 如果已经有了相同的锁,且锁的值相同,说明是同一个锁, 返回锁定成功 ,更新锁过期时间
                     if (value.equals(retValue)) {
                         expire(keyBytes, expire);
-                        return new RedisLock(key, value, true);
+                        return new RedisLockBo(key, value, true);
                     }
                 }
 
@@ -58,14 +58,14 @@ public abstract class BaseBinaryJedis implements IBinaryJedis {
         } catch (Throwable t) {
             logger.error("redis lock error!", t);
         }
-        return new RedisLock(key, value, false);
+        return new RedisLockBo(key, value, false);
     }
 
     @Override
-    public boolean ulock(RedisLock redisLock) {
+    public boolean ulock(RedisLockBo redisLock) {
         try {
             if (redisLock.isLock()) {
-                this.del(redisLock.getKey().getBytes(SysConstants.SYS_ENCODING));
+                this.del(redisLock.getKey().getBytes("UTF-8"));
             }
             return true;
         } catch (Throwable e) {

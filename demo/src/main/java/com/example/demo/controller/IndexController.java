@@ -1,6 +1,6 @@
 package com.example.demo.controller;
 
-import com.example.demo.util.DateUtil;
+import com.example.demo.util.DateHelper;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,6 +19,6 @@ public class IndexController {
     }
 
     private String getHello() {
-        return "启动成功,现在的时间是" + DateUtil.dateToString(new Date(), DateUtil.YYYYMMDDHHMMSS_read);
+        return "启动成功,现在的时间是" + DateHelper.dateToString(new Date(), DateHelper.YYYYMMDDHHMMSS_READ);
     }
 }

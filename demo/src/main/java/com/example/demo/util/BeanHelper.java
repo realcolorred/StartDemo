@@ -5,7 +5,7 @@ import java.lang.reflect.Field;
 /**
  * Created by lenovo on 2019/9/26.
  */
-public class BeanUtil {
+public class BeanHelper {
 
     public static <T> T fillEmptyBean(T obj) {
         Class userCla = (Class) obj.getClass();
@@ -22,10 +22,10 @@ public class BeanUtil {
                         f.set(obj, 0L);
                         continue;
                     } else if (String.class == f.getType()) {
-                        f.set(obj, StringUtil.EMPTY);
+                        f.set(obj, StringHelper.EMPTY);
                         continue;
                     } else if (java.util.Date.class.isAssignableFrom(f.getType())) {
-                        f.set(obj, DateUtil.NULL);
+                        f.set(obj, DateHelper.NULL);
                         continue;
                     } else if (Byte.class == f.getType()) {
                         f.set(obj, (byte) 0);

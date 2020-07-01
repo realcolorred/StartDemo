@@ -2,16 +2,16 @@ package com.example.demo.util.tree;
 
 public class RedBlackTree<T extends Comparable> {
 
-    private static final boolean RED   = false;
+    private static final boolean RED = false;
     private static final boolean BLACK = true;
 
-    private RBTNode<T> mRoot;
+    private RBTNodeBo<T> mRoot;
 
-    private void insert(RBTNode<T> node){
+    private void insert(RBTNodeBo<T> node) {
 
     }
 
-    private void leftRotate(RBTNode<T> x) {
+    private void leftRotate(RBTNodeBo<T> x) {
         // 左旋示意图
         //       x        -->>  y
         //      /\             /\
@@ -19,7 +19,7 @@ public class RedBlackTree<T extends Comparable> {
         //       /\          /\
         //      b  c        a b
 
-        RBTNode<T> y = x.right; // 设置x的右孩子为y
+        RBTNodeBo<T> y = x.right; // 设置x的右孩子为y
 
         // 将 “y的左孩子” 设为 “x的右孩子”；
         // 如果y的左孩子非空，将 “x” 设为 “y的左孩子的父亲”
@@ -47,9 +47,9 @@ public class RedBlackTree<T extends Comparable> {
         x.parent = y;
     }
 
-    private void rightRotate(RBTNode<T> y) {
+    private void rightRotate(RBTNodeBo<T> y) {
         // 设置x是当前节点的左孩子。
-        RBTNode<T> x = y.left;
+        RBTNodeBo<T> x = y.left;
 
         // 将 “x的右孩子” 设为 “y的左孩子”；
         // 如果"x的右孩子"不为空的话，将 “y” 设为 “x的右孩子的父亲”
@@ -76,23 +76,6 @@ public class RedBlackTree<T extends Comparable> {
 
         // 将 “y的父节点” 设为 “x”
         y.parent = x;
-    }
-}
-
-
-class RBTNode<T extends Comparable> {
-    boolean    color;        // 颜色
-    T          key;                // 关键字(键值)
-    RBTNode<T> left;    // 左孩子
-    RBTNode<T> right;    // 右孩子
-    RBTNode<T> parent;    // 父结点
-
-    public RBTNode(T key, boolean color, RBTNode<T> parent, RBTNode<T> left, RBTNode<T> right) {
-        this.key = key;
-        this.color = color;
-        this.parent = parent;
-        this.left = left;
-        this.right = right;
     }
 }
 

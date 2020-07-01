@@ -1,9 +1,9 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.util.BeanUtil;
-import com.example.demo.util.CollectionUtil;
-import com.example.demo.util.NumberUtil;
-import com.example.demo.util.StringUtil;
+import com.example.demo.util.BeanHelper;
+import com.example.demo.util.CollectionHelper;
+import com.example.demo.util.NumberHelper;
+import com.example.demo.util.StringHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,27 +17,27 @@ public abstract class BaseService {
     protected Logger logger = LoggerFactory.getLogger(this.getClass());
 
     protected boolean isEmpty(String str) {
-        return StringUtil.isEmpty(str);
+        return StringHelper.isEmpty(str);
     }
 
     protected boolean isNotEmpty(String str) {
-        return StringUtil.isNotEmpty(str);
+        return StringHelper.isNotEmpty(str);
     }
 
     protected boolean isNotEmpty(Collection<?> collection) {
-        return CollectionUtil.isNotEmpty(collection);
+        return CollectionHelper.isNotEmpty(collection);
     }
 
     protected boolean isVaildNum(Integer num) {
-        return NumberUtil.isVaildNum(num);
+        return NumberHelper.isVaildNum(num);
     }
 
     protected boolean isVaildNum(Long num) {
-        return NumberUtil.isVaildNum(num);
+        return NumberHelper.isVaildNum(num);
     }
 
     protected void fillEmptyBean(Object obj) {
-        BeanUtil.fillEmptyBean(obj);
+        BeanHelper.fillEmptyBean(obj);
     }
 
 }

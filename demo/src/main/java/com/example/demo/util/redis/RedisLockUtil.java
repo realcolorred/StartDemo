@@ -1,8 +1,9 @@
-package com.example.demo.util;
+package com.example.demo.util.redis;
 
-import com.example.demo.util.redis.BinaryJedisFactory;
+import com.example.demo.util.UUIDUtil;
+import com.example.demo.util.redis.factory.BinaryJedisFactory;
 import com.example.demo.constants.RedisConstans;
-import com.example.demo.util.redis.RedisLock;
+import com.example.demo.util.redis.bo.RedisLockBo;
 import com.example.demo.util.redis.command.ILockCommand;
 
 /**
@@ -35,7 +36,7 @@ public class RedisLockUtil {
      * @param key 锁的KEY
      * @return 缓存锁
      */
-    public static RedisLock lock(String key) {
+    public static RedisLockBo lock(String key) {
         return getLockCommand().lock(key, UUIDUtil.getUUID(), RedisConstans.REDIS_LOCK_TIME_OUT, RedisConstans.REDIS_LOCK_EXPORE);
     }
 
@@ -44,7 +45,7 @@ public class RedisLockUtil {
      * @param redisLock 缓存锁
      * @return 成功 or 失败
      */
-    public static boolean ulock(RedisLock redisLock) {
+    public static boolean ulock(RedisLockBo redisLock) {
         return getLockCommand().ulock(redisLock);
     }
 }
