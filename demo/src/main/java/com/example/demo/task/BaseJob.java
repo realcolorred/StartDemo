@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Created by lenovo on 2019/9/12.
  */
-public abstract class BaseJob implements Job {
+public abstract class BaseJob {
 
     protected Logger logger = LoggerFactory.getLogger(this.getClass());
 

@@ -22,7 +22,7 @@ import java.util.List;
 public class HelloWorldController {
     /**
      * 请求： http://localhost:8800/test/ http方式：get 请求返回contentType: text/plain
-     * 请求responseBody: "Hello page"
+     * 请求responseBody: "Hello static"
      *
      * @return
      * @Description
@@ -30,7 +30,7 @@ public class HelloWorldController {
      */
     @RequestMapping("/")
     public String index() {
-        return "Hello page";
+        return "Hello static";
     }
 
     /**
