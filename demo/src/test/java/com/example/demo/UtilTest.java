@@ -2,13 +2,13 @@ package com.example.demo;
 
 import com.example.demo.bean.KDM;
 import com.example.demo.entity.KingEntity;
-import com.example.demo.util.DateHelper;
+import com.example.pub.util.DateHelper;
 import com.example.demo.util.RSA.RSAEncode;
 import com.example.demo.util.RSA.RSASign;
 import com.example.demo.util.redis.RedisLockUtil;
 import com.example.demo.util.redis.RedisUtil;
-import com.example.demo.util.UUIDUtil;
-import com.example.demo.util.ValidatorUtil;
+import com.example.pub.util.UUIDUtil;
+import com.example.pub.util.ValidatorUtil;
 import com.example.demo.util.redis.bo.RedisLockBo;
 import com.example.demo.util.restCilent.RestCilentUtil;
 import org.junit.AfterClass;

@@ -1,6 +1,6 @@
 package com.example.demo.util.redis.inst;
 
-import com.example.demo.util.PropertyUtil;
+import com.example.pub.util.PropertyUtil;
 import com.example.demo.util.redis.command.IBinaryJedis;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;

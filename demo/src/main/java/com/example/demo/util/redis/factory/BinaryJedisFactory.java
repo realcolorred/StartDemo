@@ -1,6 +1,6 @@
 package com.example.demo.util.redis.factory;
 
-import com.example.demo.util.PropertyUtil;
+import com.example.pub.util.PropertyUtil;
 import com.example.demo.util.redis.command.IBinaryJedis;
 import com.example.demo.util.redis.inst.BinaryJedisCluster;
 import com.example.demo.util.redis.inst.BinaryJedisPool;

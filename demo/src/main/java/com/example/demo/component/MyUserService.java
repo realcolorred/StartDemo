@@ -1,6 +1,6 @@
 package com.example.demo.component;
 
-import com.example.demo.util.StringHelper;
+import com.example.pub.util.StringHelper;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;

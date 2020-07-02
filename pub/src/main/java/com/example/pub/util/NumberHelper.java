@@ -1,4 +1,4 @@
-package com.example.demo.util;
+package com.example.pub.util;
 
 /**
  * Created by realcolorred on 2019/3/12.

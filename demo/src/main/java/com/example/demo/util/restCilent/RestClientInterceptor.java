@@ -1,8 +1,8 @@
 package com.example.demo.util.restCilent;
 
-import com.example.demo.util.CollectionHelper;
-import com.example.demo.util.DateHelper;
-import com.example.demo.util.StringHelper;
+import com.example.pub.util.CollectionHelper;
+import com.example.pub.util.DateHelper;
+import com.example.pub.util.StringHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;

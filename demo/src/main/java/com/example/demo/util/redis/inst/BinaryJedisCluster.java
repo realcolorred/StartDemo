@@ -1,6 +1,6 @@
 package com.example.demo.util.redis.inst;
 
-import com.example.demo.util.PropertyUtil;
+import com.example.pub.util.PropertyUtil;
 import redis.clients.jedis.HostAndPort;
 import redis.clients.jedis.JedisPoolConfig;
 import redis.clients.jedis.Protocol;

@@ -1,5 +1,7 @@
 package com.example.demo.controller;
 
+import com.example.demo.feignapi.TestFeign;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -10,6 +12,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/metrics")
 public class MetricsController {
+
+    @Autowired
+    private TestFeign testFeign;
 
     @RequestMapping(value = { "/query", "/", "" })
     public ResponseEntity<String> query() {
@@ -24,5 +29,10 @@ public class MetricsController {
                 + "eip_num{cidr=\"10.43.154.0/24\",ip_version=\"4\",subnet_id=\"55f0c8e8-42d8-41a0-b1c4-77d9441ebc28\",subnet_name=\"ext-toc-sub1\",total_ips=\"253\", used_ips=\"3\"} 250";
 
         return ResponseEntity.ok().header("Content-Type", "text/plain").body(msg);
+    }
+
+    @RequestMapping("tets")
+    public String test() {
+        return testFeign.hello();
     }
 }

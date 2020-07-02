@@ -3,8 +3,8 @@ package com.example.demo.service.impl;
 import com.example.demo.dao.sourceCompany.KingMgrMapper;
 import com.example.demo.entity.KingEntity;
 import com.example.demo.service.IKingService;
-import com.example.demo.util.DateHelper;
-import com.example.demo.util.ValidatorUtil;
+import com.example.pub.util.DateHelper;
+import com.example.pub.util.ValidatorUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

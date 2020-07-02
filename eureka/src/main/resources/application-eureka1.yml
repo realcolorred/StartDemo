@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: eureka-server
+
+server:
+  port: 8701
+
+eureka:
+  server:
+    enableSelfPreservation: false
+  instance:
+    prefer-ip-address: false
+    hostname: eureka1
+  client:
+    registerWithEureka: false
+    fetchRegistry: false
+    service-url:
+      defaultZone: http://eureka2:8702/eureka/,http://eureka3:8703/eureka/

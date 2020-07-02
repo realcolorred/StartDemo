@@ -1,4 +1,4 @@
-package com.example.demo.constants;
+package com.example.pub.constant;
 
 public interface SysConstants {
 

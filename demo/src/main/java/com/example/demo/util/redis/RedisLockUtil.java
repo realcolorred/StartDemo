@@ -1,6 +1,6 @@
 package com.example.demo.util.redis;
 
-import com.example.demo.util.UUIDUtil;
+import com.example.pub.util.UUIDUtil;
 import com.example.demo.util.redis.factory.BinaryJedisFactory;
 import com.example.demo.constants.RedisConstans;
 import com.example.demo.util.redis.bo.RedisLockBo;

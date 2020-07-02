@@ -1,9 +1,9 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.util.BeanHelper;
-import com.example.demo.util.CollectionHelper;
-import com.example.demo.util.NumberHelper;
-import com.example.demo.util.StringHelper;
+import com.example.pub.util.BeanHelper;
+import com.example.pub.util.CollectionHelper;
+import com.example.pub.util.NumberHelper;
+import com.example.pub.util.StringHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
