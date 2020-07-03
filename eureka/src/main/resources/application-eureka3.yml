@@ -1,18 +1,3 @@
-spring:
-  application:
-    name: eureka-server
-
-server:
-  port: 8703
-
-eureka:
-  server:
-    enableSelfPreservation: false
-  instance:
-    prefer-ip-address: false
-    hostname: eureka3
-  client:
-    registerWithEureka: false
-    fetchRegistry: false
-    service-url:
-      defaultZone: http://eureka2:8701/eureka/,http://eureka3:8702/eureka/
+server.port: 8703
+eureka.instance.hostname: eureka3
+eureka.client.service-url.defaultZone: http://eureka1:8701/eureka/,http://eureka2:8702/eureka/

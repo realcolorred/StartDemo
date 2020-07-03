@@ -14,12 +14,12 @@ import java.util.Date;
 @DisallowConcurrentExecution // 此标记用在实现Job的类上面,意思是不允许并发执行
 public class TimeJob extends BaseJob {
 
-    @Scheduled(fixedRate = 5000)//每5秒执行一次
+    //@Scheduled(fixedRate = 5000)//每5秒执行一次
     public void work() throws Exception {
         logger.info("测试定时任务启动,现在的时间是" + DateHelper.dateToString(new Date(), DateHelper.YYYYMMDDHHMMSS_READ));
     }
 
-    @Scheduled(cron = "0 0/1 * * * ?") // 每分钟执行一次
+    //@Scheduled(cron = "0 0/1 * * * ?") // 每分钟执行一次
     public void work2() throws Exception {
         logger.info("一分钟一次的定时任务测试,现在的时间是" + DateHelper.dateToString(new Date(), DateHelper.YYYYMMDDHHMMSS_READ));
     }
