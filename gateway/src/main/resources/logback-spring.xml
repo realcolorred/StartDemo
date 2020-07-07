@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration scan="true" scanPeriod="10000" debug="false">
-    <contextName>mydemo.gateway</contextName>
+    <contextName>mydemo.one</contextName>
 
     <property name="LOG_HOME" value="F:/`code/my-github-project/demo-springboot-log"/>
     <property name="ENCODING" value="UTF-8"/>

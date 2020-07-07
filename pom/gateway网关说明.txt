@@ -1,0 +1,35 @@
+gateway网关能实现什么: 单点入口,路由转发,限流,熔断,日志监控,安全认证
+
+predicates断言,满足条件才会进入router
+1.After,Before,Between.以时间作为匹配规则
+2.cookie
+3.Header
+4.Host
+5.Method
+6.Path
+7.Query
+8.RemoteAddr
+
+filters过滤器,用于匹配规则成功后,添加额外参数或进行额外操作
+1.AddRequestHeader
+2.AddRequestParameter
+3.AddResponseHeader
+4.RemoveNonProxyHeaders
+5.RemoveRequestHeader
+6.RemoveResponseHeader
+7.SetPath
+8.StripPrefix 截断一定数量的url前缀
+9.PrefixPath 增加路径前缀,如:一个请求是/hello，通过路由，就会将请求修改为/mypath/hello
+10.SetStatus
+11.SetResponseHeader
+12.RewritePath
+13.RewriteResponseHeader
+14.RedirectTo
+15.PreserveHostHeader 会保留原始请求的host头信息，并原封不动的转发出去，而不是被gateway的http客户端重置。
+16.SaveSession
+17.SecureHeaders
+18.RequestRateLimiter 限流. KeyResolver默认实现是PrincipalNameKeyResolver.可以使用Redis RateLimiter实现
+19.Retry 设置对某种返回码后的请求重试次数
+20.RequestSize 限制请求包大小,单位字节
+21.Hystrix 是Netflix实现的断路器模式工具包,The Hystrix GatewayFilter就是将断路器使用在gateway的路由上,保护服务避免级联故障,以及在下游失败时可以降级返回.
+22.FallbackHeaders 将Hystrix执行的异常信息添加到外部请求的fallbackUriheader上.

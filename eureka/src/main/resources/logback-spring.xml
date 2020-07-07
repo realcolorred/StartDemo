@@ -57,7 +57,7 @@
         <appender-ref ref="DBLOG_APPENDER" />
     </logger>
 
-    <logger name="com.example.demo" level="DEBUG" additivity="true">
+    <logger name="com.example" level="DEBUG" additivity="true">
         <appender-ref ref="PROJECT_APPENDER" />
     </logger>
 

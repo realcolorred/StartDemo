@@ -10,16 +10,26 @@ spring.http.encoding:
 
 server.tomcat.uri-encoding: UTF-8
 
-#management.security.enabled: false # spring-boot 1.5.x °æ±¾ÖĞÍ¨¹ımanagement.security.enabled=falseÀ´±©Â¶ËùÓĞ¶Ëµã
+#management.security.enabled: false # spring-boot 1.5.x ç‰ˆæœ¬ä¸­é€šè¿‡management.security.enabled=falseæ¥æš´éœ²æ‰€æœ‰ç«¯ç‚¹
 management:
   endpoints.web:
-    exposure.include: '*' # spring-boot 2.0 ±©Â¶ËùÓĞ¶ËµãµÄ·½Ê½
+    exposure.include: '*' # spring-boot 2.0 æš´éœ²æ‰€æœ‰ç«¯ç‚¹çš„æ–¹å¼
 
 spring:
   application.name: gateway
   cloud.gateway.routes:
-    - id:
-      url:
+    - id: demo
+      url: http://www.google.com
       predicates:
+      - Path=/demo/{segment},/api/demo/{segment}
       filters:
+      - name: Hystrix
+        args:
+          name: fetchIngredients
+          fallbackUri: forward:/fallback
+    - id: demo-fallback
+      uri: http://127.0.0.1:9994
+      predicates:
+      - Path=/fallback
 
+hystrix.command.fallbackcmd.execution.isolation.thread.timeoutInMilliseconds: 5000
