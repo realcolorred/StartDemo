@@ -38,9 +38,9 @@ user-service:
   ribbon.MaxAutoRetries: 1 # 设置针对user-service服务的当前实例的重试次数
 
 hystrix.command:
-  findAllUser:
-    execution.timeout.enabled: false # 对接口/findAllUser关闭熔断功能
-    execution.isolation.thread.timeoutInMilliseconds: 10000 # 对接口/findAllUser设置熔断超时时间
+  findAllUser: # 对象接口： /findAllUser
+    execution.timeout.enabled: false # 对接口关闭熔断功能
+    execution.isolation.thread.timeoutInMilliseconds: 10000 # 对接口设置熔断超时时间
 
 jdbc:
   company:
