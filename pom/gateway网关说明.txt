@@ -1,4 +1,4 @@
-gateway网关能实现什么: 单点入口,路由转发,限流,熔断,日志监控,安全认证
+gateway网关能实现什么: 单点入口,路由转发,限流,熔断,日志监控,安全认证.
 
 predicates断言,满足条件才会进入router
 1.After,Before,Between.以时间作为匹配规则
