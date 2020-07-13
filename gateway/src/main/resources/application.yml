@@ -19,17 +19,24 @@ spring:
   application.name: gateway
   cloud.gateway.routes:
     - id: demo
-      url: http://www.google.com
+      url: lb://demo
       predicates:
-      - Path=/demo/{segment},/api/demo/{segment}
+        - Path=/demo/**
       filters:
-      - name: Hystrix
-        args:
-          name: fetchIngredients
-          fallbackUri: forward:/fallback
-    - id: demo-fallback
-      uri: http://127.0.0.1:9994
+        - RewritePath=/demo/(?<segment>.*), /$\{segment}
+        - name: Hystrix
+          args:
+            name: demoCommand
+            fallbackUri: forward:/fallback/default
+    - id: task
+      url: lb://task
       predicates:
-      - Path=/fallback
+        - Path=/demo/**
+      filters:
+        - RewritePath=/demo/(?<segment>.*), /$\{segment}
+        - name: Hystrix
+          args:
+            name: demoCommand
+            fallbackUri: forward:/fallback/default
 
 hystrix.command.fallbackcmd.execution.isolation.thread.timeoutInMilliseconds: 5000
