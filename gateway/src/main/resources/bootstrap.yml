@@ -1,0 +1,63 @@
+server.tomcat.uri-encoding: UTF-8
+
+spring.http.encoding:
+  force: true
+  enabled: true
+  charset: UTF-8
+
+logging.config: classpath:logback-spring.xml
+
+# spring-boot 1.5.x 版本中通过management.security.enabled=false来暴露所有端点
+#management.security.enabled: false
+
+# spring-boot 2.0 暴露所有端点的方式
+#management.endpoints.web.exposure.include: '*'
+
+spring:
+  application.name: gateway
+  cloud.gateway.routes:
+    - id: demo
+      uri: lb://demo
+      predicates:
+        - Path=/demo/**
+      filters:
+        - RewritePath=/demo/(?<segment>.*), /$\{segment}
+        - name: Hystrix
+          args:
+            name: demoCommand
+            fallbackUri: forward:/fallback/default
+        - name: RequestRateLimiter
+          args:
+            key-resolver: '#{@ipKeyResolver}'
+            redis-rate-limiter.replenishRate: 5 # 令牌桶每秒填充平均速率
+            redis-rate-limiter.burstCapacity: 10 # 令牌桶总容量
+    - id: task
+      uri: lb://task
+      predicates:
+        - Path=/task/**
+      filters:
+        - RewritePath=/task/(?<segment>.*), /$\{segment}
+        - name: Hystrix
+          args:
+            name: taskCommand
+            fallbackUri: forward:/fallback/default
+    - id: baidu
+      uri: http://www.baidu.com
+      predicates:
+        - Path=/baidu/**
+      filters:
+        - RewritePath=/baidu/(?<segment>.*), /$\{segment}
+        - name: Hystrix
+          args:
+            name: baiduCommand
+            fallbackUri: forward:/fallback/default
+
+# Spring Cloud Hystrix降级处理超时时间设置
+hystrix.command:
+  default.execution.isolation.thread.timeoutInMilliseconds: 60000
+  demoCommand.execution.isolation.thread.timeoutInMilliseconds: 5000
+  taskCommand.execution.isolation.thread.timeoutInMilliseconds: 5000
+
+filter:
+  jwt:
+    ignore: /demo/test/**,/demo/ctyun/**

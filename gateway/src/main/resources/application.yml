@@ -1,42 +1,21 @@
-server:
-  port: 8881
+#端口
+server.port: 8881
 
-logging.config: classpath:logback-spring.xml
+eureka:
+  instance:
+    prefer-ip-address: true #服务注册在eureka的地址选择是 ip-address 还是 hostname
+    ip-address: 127.0.0.1 #服务ip地址
+    hostname: ${spring.application.name} #配置在hosts里面的域名，或实际的域名
+    instance-id: ${eureka.instance.ip-address}:${server.port} #服务注册在eureka-ui上展示的名称
+  client:
+    enabled: true
+    serviceUrl.defaultZone: http://127.0.0.1:8701/eureka/ #eureka服务端地址，多个地址之间用逗号隔开
+    fetch.registry: true # 从eureka获取其他服务的注册信息
+    registry-fetch-interval-seconds: 2 #每隔2秒从服务端获取最新的注册信息,如果获取超时，第二次获取时间会翻倍
+    register.with.eureka: true #是否注册到eureka
+    instance-info-replication-interval-seconds: 5 #每隔5秒扫描一次本地实例，如果有变化向服务重新注册
 
-spring.http.encoding:
-  force: true
-  enabled: true
-  charset: UTF-8
-
-server.tomcat.uri-encoding: UTF-8
-
-#management.security.enabled: false # spring-boot 1.5.x 版本中通过management.security.enabled=false来暴露所有端点
-management:
-  endpoints.web:
-    exposure.include: '*' # spring-boot 2.0 暴露所有端点的方式
-
-spring:
-  application.name: gateway
-  cloud.gateway.routes:
-    - id: demo
-      url: lb://demo
-      predicates:
-        - Path=/demo/**
-      filters:
-        - RewritePath=/demo/(?<segment>.*), /$\{segment}
-        - name: Hystrix
-          args:
-            name: demoCommand
-            fallbackUri: forward:/fallback/default
-    - id: task
-      url: lb://task
-      predicates:
-        - Path=/demo/**
-      filters:
-        - RewritePath=/demo/(?<segment>.*), /$\{segment}
-        - name: Hystrix
-          args:
-            name: demoCommand
-            fallbackUri: forward:/fallback/default
-
-hystrix.command.fallbackcmd.execution.isolation.thread.timeoutInMilliseconds: 5000
+#redis配置，用于请求限流
+spring.redis:
+  host: 127.0.0.1
+  port: 6379

@@ -10,11 +10,17 @@ import java.util.Date;
  * @author realcolor
  */
 @RestController
-@RequestMapping("/")
+@RequestMapping("")
 public class IndexController {
 
     @RequestMapping({ "/", "" })
     public String index() {
+        return getHello();
+    }
+
+    @RequestMapping({ "/delay"})
+    public String delay() throws InterruptedException {
+        Thread.sleep(3000);
         return getHello();
     }
 
