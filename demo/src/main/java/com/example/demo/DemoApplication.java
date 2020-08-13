@@ -11,9 +11,9 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @Configuration
 @EnableScheduling
 @EnableEurekaClient
-@EnableFeignClients(basePackages = "com.example")
-public class Application {
+@EnableFeignClients(basePackages = "com.example.demo.feignapi")
+public class DemoApplication {
     public static void main(String[] args) {
-        SpringApplication.run(Application.class, args);
+        SpringApplication.run(DemoApplication.class, args);
     }
 }

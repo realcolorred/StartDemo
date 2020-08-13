@@ -23,6 +23,7 @@ public class MetricsController {
                 + "eip_num{cidr=\"175.6.219.0/24\",ip_version=\"4\",subnet_id=\"62e02975-c832-4443-8c62-96f8246c10a2\",subnet_name=\"ext-subnet3\",total_ips=\"253\", used_ips=\"0\"} 253\n"
                 + "eip_num{cidr=\"10.43.154.0/24\",ip_version=\"4\",subnet_id=\"55f0c8e8-42d8-41a0-b1c4-77d9441ebc28\",subnet_name=\"ext-toc-sub1\",total_ips=\"253\", used_ips=\"3\"} 250";
 
+        msg+= "\nntp_service{serverAddr=\"100.64.3.250\", serverPort=\"123\", namespace=\"qdhcp-1c2b0dd6-1e35-4709-8929-ae913ac033ab\"} 1";
         return ResponseEntity.ok().header("Content-Type", "text/plain").body(msg);
     }
 }
