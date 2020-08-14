@@ -7,11 +7,11 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = {"com.example.demo","com.example.pub"})
 @Configuration
 @EnableScheduling
 @EnableEurekaClient
-@EnableFeignClients(basePackages = "com.example.demo.feignapi")
+@EnableFeignClients(basePackages = "com.example")
 public class DemoApplication {
     public static void main(String[] args) {
         SpringApplication.run(DemoApplication.class, args);
