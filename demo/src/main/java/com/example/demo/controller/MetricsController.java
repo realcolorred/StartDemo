@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -11,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/metrics")
 public class MetricsController {
 
-    @RequestMapping(value = { "/query", "/", "" })
+    @GetMapping
     public ResponseEntity<String> query() {
         String msg =
             "node_openstack_bandwidth_order{vpcNamespace=\"vpc-g0od\",dstIp=\"114.114.114.114\",lossRate=\"100\",hasOrderBandwidth=\"true\", tenantId=\"1\",regionId=\"1\",bandName=\"金碧物业B49\"} 0\n"
