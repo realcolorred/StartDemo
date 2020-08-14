@@ -57,14 +57,4 @@ com.neo:
   title: 2333
   description: 233333
 
-spring.http.encoding:
-  force: true
-  enabled: true
-  charset: UTF-8
-
-server.tomcat.uri-encoding: UTF-8
-
-logging.config: classpath:logback-spring.xml
-
 spring.thymeleaf.prefix: classpath:/page/
-
