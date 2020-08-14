@@ -17,6 +17,7 @@
 
     <modules>
         <module>../demo</module>
+        <module>../demoapi</module>
         <module>../eureka</module>
         <module>../gateway</module>
         <module>../pub</module>

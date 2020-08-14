@@ -1,6 +1,6 @@
 package com.example.demo;
 
-import com.example.demo.bean.KDM;
+import com.example.demo.bo.KDM;
 import com.example.demo.entity.KingEntity;
 import com.example.pub.util.DateHelper;
 import com.example.demo.util.RSA.RSAEncode;

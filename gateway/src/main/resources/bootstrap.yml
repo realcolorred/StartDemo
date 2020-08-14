@@ -60,4 +60,4 @@ hystrix.command:
 
 filter:
   jwt:
-    ignore: /demo/test/**,/demo/ctyun/**
+    ignore: /demo/feign/test,/demo/ctyun/**
