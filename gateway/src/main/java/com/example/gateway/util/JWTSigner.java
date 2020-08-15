@@ -9,6 +9,7 @@ import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.example.gateway.common.JwtConst;
 import com.example.gateway.config.TokenSecretConfig;
+import com.example.pubserv.util.SpringBeanUtils;
 
 import java.util.Date;
 

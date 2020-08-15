@@ -17,8 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/feign")
 public class FeignTestController {
 
-    //@Autowired(required = false)
-    @Autowired
+    @Autowired(required = false)
     private TestFeign testFeign;
 
     @ApiOperation("测试")

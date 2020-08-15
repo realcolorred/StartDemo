@@ -1,4 +1,4 @@
-package com.example.gateway.util;
+package com.example.pubserv.util;
 
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
