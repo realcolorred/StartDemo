@@ -1,6 +1,6 @@
 //package com.example.demo.component;
 //
-//import com.example.pub.util.StringHelper;
+//import com.example.pubserv.util.StringUtil;
 //import org.springframework.security.core.authority.SimpleGrantedAuthority;
 //import org.springframework.security.core.userdetails.User;
 //import org.springframework.security.core.userdetails.UserDetails;
@@ -23,7 +23,7 @@
 //        String testPassword = "123";
 //        String testauthoritie = "ROLE_ADMIN";
 //
-//        if (StringHelper.isEmpty(userName)) {
+//        if (StringUtil.isEmpty(userName)) {
 //            throw new UsernameNotFoundException("用户名不能为空");
 //        } else if (!testUserName.equals(userName)) {
 //            throw new UsernameNotFoundException("用户名或者密码不正确");

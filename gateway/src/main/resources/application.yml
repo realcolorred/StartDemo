@@ -1,5 +1,5 @@
 #端口
-server.port: 8881
+server.port: 8888
 
 eureka:
   instance:
@@ -19,3 +19,6 @@ eureka:
 spring.redis:
   host: 127.0.0.1
   port: 6379
+
+# 签名密钥
+token.secret: 6af24872a460ecd9951cc8d822acb76e

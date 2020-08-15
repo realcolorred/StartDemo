@@ -1,7 +1,7 @@
 package com.example.demo.controller;
 
+import com.example.common.util.DateUtil;
 import com.example.demo.bo.User;
-import com.example.pub.util.DateHelper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -39,7 +39,7 @@ public class IndexController {
     }
 
     private String getHello() {
-        return "启动成功,现在的时间是" + DateHelper.dateToString(new Date(), DateHelper.YYYYMMDDHHMMSS_READ);
+        return "启动成功,现在的时间是" + DateUtil.dateToStringRead(new Date());
     }
 
     @ApiOperation("swagger注解测试")

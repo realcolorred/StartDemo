@@ -1,16 +1,16 @@
 package com.example.demo;
 
+import com.example.common.util.DateUtil;
+import com.example.common.util.UUIDUtil;
 import com.example.demo.bo.KDM;
 import com.example.demo.entity.KingEntity;
-import com.example.pub.util.DateHelper;
 import com.example.demo.util.RSA.RSAEncode;
 import com.example.demo.util.RSA.RSASign;
 import com.example.demo.util.redis.RedisLockUtil;
 import com.example.demo.util.redis.RedisUtil;
-import com.example.pub.util.UUIDUtil;
-import com.example.pub.util.ValidatorUtil;
 import com.example.demo.util.redis.bo.RedisLockBo;
 import com.example.demo.util.restCilent.RestCilentUtil;
+import com.example.pubserv.util.ValidatorUtil;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -49,25 +49,25 @@ public class UtilTest {
         Calendar ca = Calendar.getInstance();
         ca.set(2019, Calendar.MAY, 1);
         System.out.println(ca.getTime().getTime());
-        System.out.println(DateHelper.dateToString(ca.getTime(), DateHelper.YYYYMMDDHHMMSS_READ) + "\n");
+        System.out.println(DateUtil.dateToStringRead(ca.getTime()) + "\n");
 
         ca.set(1800, Calendar.MAY, 1);
         System.out.println(ca.getTime().getTime());
-        System.out.println(DateHelper.dateToString(ca.getTime(), DateHelper.YYYYMMDDHHMMSS_READ) + "\n");
+        System.out.println(DateUtil.dateToStringRead(ca.getTime()) + "\n");
 
         ca.set(100, Calendar.MAY, 1);
         System.out.println(ca.getTime().getTime());
-        System.out.println(DateHelper.dateToString(ca.getTime(), DateHelper.YYYYMMDDHHMMSS_READ) + "\n");
+        System.out.println(DateUtil.dateToStringRead(ca.getTime()) + "\n");
 
         ca.set(-100, Calendar.MAY, 1);
         System.out.println(ca.getTime().getTime());
-        System.out.println(DateHelper.dateToString(ca.getTime(), DateHelper.YYYYMMDDHHMMSS_READ) + "\n");
+        System.out.println(DateUtil.dateToStringRead(ca.getTime()) + "\n");
 
-        System.out.println(DateHelper.dateToString(new Date(0), DateHelper.YYYYMMDDHHMMSS_READ) + "\n");
+        System.out.println(DateUtil.dateToStringRead(new Date(0)) + "\n");
 
-        long mill = DateHelper.getTimes("1918/05/03");
+        long mill = DateUtil.getTimes("1918/05/03");
         System.out.println(mill);
-        System.out.println(DateHelper.dateToString(new Date(mill), DateHelper.YYYYMMDDHHMMSS_READ));
+        System.out.println(DateUtil.dateToStringRead(new Date(mill)));
     }
 
     @Test
@@ -118,7 +118,7 @@ public class UtilTest {
         kdm.setPubStr("这个是许可,生失效时间为:20190101-20200101");
         kdm.setPriStr(RSAEncode.encrypt("key," + key + ",effexpDate,20190101-20200101", publicKeyMac));
         kdm.setSign(
-                RSASign.sign("开发方签名,公开部分和加密部分的md5值为:" + DigestUtils.md5DigestAsHex((kdm.getPubStr() + kdm.getPriStr()).getBytes()), privateKeySignDev));
+            RSASign.sign("开发方签名,公开部分和加密部分的md5值为:" + DigestUtils.md5DigestAsHex((kdm.getPubStr() + kdm.getPriStr()).getBytes()), privateKeySignDev));
         System.out.println("发行方根据影院机器的公钥制作了一份KMD:" + kdm.toString());
         System.out.println("发行方签名公钥为:" + publicKeySignDev);
 

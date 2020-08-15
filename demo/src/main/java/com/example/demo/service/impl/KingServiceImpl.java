@@ -1,10 +1,10 @@
 package com.example.demo.service.impl;
 
+import com.example.common.util.DateUtil;
 import com.example.demo.dao.sourceCompany.KingMgrMapper;
 import com.example.demo.entity.KingEntity;
 import com.example.demo.service.IKingService;
-import com.example.pub.util.DateHelper;
-import com.example.pub.util.ValidatorUtil;
+import com.example.pubserv.util.ValidatorUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -45,7 +45,7 @@ public class KingServiceImpl extends BaseService implements IKingService {
         }
 
         if (!isVaildNum(entity.getRuleStartInt()) && isNotEmpty(entity.getRuleStart())) {
-            entity.setRuleStartInt(DateHelper.getTimes(entity.getRuleStart()));
+            entity.setRuleStartInt(DateUtil.getTimes(entity.getRuleStart()));
         }
         fillEmptyBean(entity);
         return kingMgrMapper.insert(entity);
@@ -59,13 +59,13 @@ public class KingServiceImpl extends BaseService implements IKingService {
                 KingEntity newEntity = new KingEntity();
                 newEntity.setId(entity.getId());
                 if (isNotEmpty(entity.getRuleStart())) {
-                    newEntity.setRuleStartInt(DateHelper.getTimes(entity.getRuleStart()));
+                    newEntity.setRuleStartInt(DateUtil.getTimes(entity.getRuleStart()));
                 }
                 if (isNotEmpty(entity.getRuleStart()) && isNotEmpty(entity.getRuleEnd())) {
-                    newEntity.setRuleTime(DateHelper.getYearBetween(entity.getRuleStart(), entity.getRuleEnd()));
+                    newEntity.setRuleTime(DateUtil.getYearBetween(entity.getRuleStart(), entity.getRuleEnd()));
                 }
                 if (isNotEmpty(entity.getBirthday()) && isNotEmpty(entity.getDeathday())) {
-                    newEntity.setAge(DateHelper.getYearBetween(entity.getBirthday(), entity.getDeathday()));
+                    newEntity.setAge(DateUtil.getYearBetween(entity.getBirthday(), entity.getDeathday()));
                 }
                 kingMgrMapper.update(newEntity);
             }

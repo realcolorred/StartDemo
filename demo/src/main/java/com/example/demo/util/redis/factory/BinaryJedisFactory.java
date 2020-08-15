@@ -1,9 +1,9 @@
 package com.example.demo.util.redis.factory;
 
-import com.example.pub.util.PropertyUtil;
 import com.example.demo.util.redis.command.IBinaryJedis;
 import com.example.demo.util.redis.inst.BinaryJedisCluster;
 import com.example.demo.util.redis.inst.BinaryJedisPool;
+import com.example.pubserv.util.PropertyUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

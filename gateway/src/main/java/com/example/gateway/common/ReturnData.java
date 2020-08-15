@@ -7,15 +7,12 @@ import com.alibaba.fastjson.JSON;
  */
 public class ReturnData<T> {
 
-    private int code;
-
+    private int    code;
     private String message;
-
 
     public ReturnData(int code, String message) {
         this.code = code;
         this.message = message;
-
     }
 
     public int getCode() {

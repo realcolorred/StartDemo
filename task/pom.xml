@@ -17,8 +17,14 @@
 	<dependencies>
 		<dependency>
 			<groupId>com.example</groupId>
-			<artifactId>pub</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<artifactId>pubserv</artifactId>
+			<version>${version}</version>
+		</dependency>
+
+		<!-- spring-boot quartz -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-quartz</artifactId>
 		</dependency>
 
 		<!-- 测试组件 -->

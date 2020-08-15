@@ -1,8 +1,8 @@
 package com.example.demo.util.restCilent;
 
-import com.example.pub.util.CollectionHelper;
-import com.example.pub.util.DateHelper;
-import com.example.pub.util.StringHelper;
+import com.example.common.util.CollectionUtil;
+import com.example.common.util.DateUtil;
+import com.example.common.util.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
@@ -39,7 +39,7 @@ public class RestClientInterceptor implements ClientHttpRequestInterceptor {
     public ClientHttpResponse intercept(HttpRequest request, byte[] body, ClientHttpRequestExecution execution) throws IOException {
         request.getHeaders().set(RestClientConst.APP_ID, appId);
         request.getHeaders().set(RestClientConst.APP_KEY, appKey);
-        request.getHeaders().set(RestClientConst.REQUEST_ID, DateHelper.dateToString(new Date(), DateHelper.YYYYMMDDHHMMSSSSS));
+        request.getHeaders().set(RestClientConst.REQUEST_ID, DateUtil.dateToString(new Date(), DateUtil.YYYYMMDDHHMMSSSSS));
 
         try {
             logRequest(request, body);
@@ -131,8 +131,8 @@ public class RestClientInterceptor implements ClientHttpRequestInterceptor {
     }
 
     private String getSpandId(HttpRequest request) {
-        String spanId = CollectionHelper.getFirst(request.getHeaders().get(RestClientConst.REQUEST_ID));
-        if (StringHelper.isEmpty(spanId)) {
+        String spanId = CollectionUtil.getFirst(request.getHeaders().get(RestClientConst.REQUEST_ID));
+        if (StringUtil.isEmpty(spanId)) {
             spanId = "";
         }
         return spanId;

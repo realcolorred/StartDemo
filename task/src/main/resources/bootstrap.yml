@@ -1,0 +1,14 @@
+spring.http.encoding:
+  force: true
+  enabled: true
+  charset: UTF-8
+
+server.tomcat.uri-encoding: UTF-8
+
+logging.config: classpath:logback-spring.xml
+
+swagger:
+  basic:
+    enable: true
+    username: admin
+    password: 123456 #启用安全swagger访问

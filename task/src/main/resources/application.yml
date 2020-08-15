@@ -1,1 +1,42 @@
+spring:
+  application:
+    name: task
 
+server:
+  port: 8802
+
+eureka:
+  instance:
+    prefer-ip-address: true #服务注册在eureka的地址选择是 ip-address 还是 hostname
+    ip-address: 127.0.0.1 #服务ip地址
+    hostname: ${spring.application.name} #配置在hosts里面的域名，或实际的域名
+    instance-id: ${eureka.instance.ip-address}:${server.port} #服务注册在eureka-ui上展示的名称
+  client:
+    enabled: true
+    serviceUrl.defaultZone: http://127.0.0.1:8701/eureka/ #eureka服务端地址，多个地址之间用逗号隔开
+    fetch.registry: true # 从eureka获取其他服务的注册信息
+    registry-fetch-interval-seconds: 2 #每隔2秒从服务端获取最新的注册信息,如果获取超时，第二次获取时间会翻倍
+    register.with.eureka: true #是否注册到eureka
+    instance-info-replication-interval-seconds: 5 #每隔5秒扫描一次本地实例，如果有变化向服务重新注册
+
+ribbon.ConnectTimeout: 500 # 设置连接超时时间
+ribbon.ReadTimeout: 5000 # 设置读取超时时间
+ribbon.OkToRetryOnAllOperations: true # 对所有操作请求都进行重试
+ribbon.MaxAutoRetriesNextServer: 2 # 切换实例的重试次数
+ribbon.MaxAutoRetries: 1 # 对当前实例的重试次数
+
+feign.hystrix.enabled: false # 关闭Hystrix功能（不要和上面的配置一起使用）
+hystrix.command.default.execution.isolation.thread.timeoutInMilliseconds: 10000 # 设置熔断超时时间
+hystrix.command.default.execution.timeout.enabled: false # 关闭熔断功能
+
+jdbc:
+  company:
+    driver-class-name: com.mysql.jdbc.Driver
+    jdbc-url: jdbc:mysql://localhost:3306/fgo?useUnicode=true&characterEncoding=utf-8
+    username: root
+    password: root
+  home:
+    driver-class-name: com.mysql.jdbc.Driver
+    jdbc-url: jdbc:mysql://localhost:3306/home?useUnicode=true&characterEncoding=utf-8
+    username: root
+    password: root

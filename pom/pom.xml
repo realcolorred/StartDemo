@@ -20,7 +20,8 @@
         <module>../demoapi</module>
         <module>../eureka</module>
         <module>../gateway</module>
-        <module>../pub</module>
+        <module>../pubserv</module>
+        <module>../common</module>
         <module>../task</module>
     </modules>
 
