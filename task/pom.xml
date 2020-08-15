@@ -21,6 +21,12 @@
 			<version>${version}</version>
 		</dependency>
 
+		<dependency>
+			<groupId>com.example</groupId>
+			<artifactId>demoapi</artifactId>
+			<version>${version}</version>
+		</dependency>
+
 		<!-- spring-boot quartz -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

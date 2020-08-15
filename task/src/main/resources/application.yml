@@ -28,15 +28,3 @@ ribbon.MaxAutoRetries: 1 # 对当前实例的重试次数
 feign.hystrix.enabled: false # 关闭Hystrix功能（不要和上面的配置一起使用）
 hystrix.command.default.execution.isolation.thread.timeoutInMilliseconds: 10000 # 设置熔断超时时间
 hystrix.command.default.execution.timeout.enabled: false # 关闭熔断功能
-
-jdbc:
-  company:
-    driver-class-name: com.mysql.jdbc.Driver
-    jdbc-url: jdbc:mysql://localhost:3306/fgo?useUnicode=true&characterEncoding=utf-8
-    username: root
-    password: root
-  home:
-    driver-class-name: com.mysql.jdbc.Driver
-    jdbc-url: jdbc:mysql://localhost:3306/home?useUnicode=true&characterEncoding=utf-8
-    username: root
-    password: root
