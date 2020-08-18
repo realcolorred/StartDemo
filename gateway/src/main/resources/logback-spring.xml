@@ -2,7 +2,7 @@
 <configuration scan="true" scanPeriod="10000" debug="false">
     <contextName>mydemo.one</contextName>
 
-    <property name="LOG_HOME" value="F:/`code/my-github-project/demo-springboot-log"/>
+    <property name="LOG_HOME" value="./myLog/gateway"/>
     <property name="ENCODING" value="UTF-8"/>
     <property name="PATTERN" value="[%t]%d{HH:mm:ss.SSS} [%thread] %-5level %logger{48} - %msg%n"/>
     <property name="LOG_EXTFILE" value="log"/>
@@ -26,6 +26,7 @@
         </rollingPolicy>
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
             <pattern>${PATTERN}</pattern>
+            <charset>${ENCODING}</charset>
         </encoder>
     </appender>
 
@@ -38,6 +39,7 @@
         </rollingPolicy>
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
             <pattern>${PATTERN}</pattern>
+            <charset>${ENCODING}</charset>
         </encoder>
     </appender>
 
@@ -50,15 +52,16 @@
         </rollingPolicy>
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
             <pattern>${PATTERN}</pattern>
+            <charset>${ENCODING}</charset>
         </encoder>
     </appender>
 
     <logger name="com.example.demo.dao" level="DEBUG" additivity="true">
-        <appender-ref ref="DBLOG_APPENDER" />
+        <appender-ref ref="DBLOG_APPENDER"/>
     </logger>
 
     <logger name="com.example" level="DEBUG" additivity="true">
-        <appender-ref ref="PROJECT_APPENDER" />
+        <appender-ref ref="PROJECT_APPENDER"/>
     </logger>
 
     <!-- 所有的INFO级别的信息都会被打印至控制台以及all.log文件里面 -->
