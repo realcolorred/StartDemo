@@ -1,63 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<parent>
-		<groupId>com.example</groupId>
-		<artifactId>pom</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
-		<relativePath>../pom/pom.xml</relativePath>
-	</parent>
-	<artifactId>task</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
-	<name>task</name>
-	<description>Demo project for Spring Boot</description>
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.example</groupId>
+        <artifactId>pom</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+        <relativePath>../pom/pom.xml</relativePath>
+    </parent>
+    <artifactId>task</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>jar</packaging>
+    <name>task</name>
+    <description>Demo project for Spring Boot</description>
 
-	<dependencies>
-		<dependency>
-			<groupId>com.example</groupId>
-			<artifactId>pubserv</artifactId>
-			<version>${version}</version>
-		</dependency>
+    <dependencies>
 
-		<dependency>
-			<groupId>com.example</groupId>
-			<artifactId>demoapi</artifactId>
-			<version>${version}</version>
-		</dependency>
+        <dependency>
+            <groupId>com.example</groupId>
+            <artifactId>pubserv</artifactId>
+            <version>${version}</version>
+        </dependency>
 
-		<!-- spring-boot quartz -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-quartz</artifactId>
-		</dependency>
+        <dependency>
+            <groupId>com.example</groupId>
+            <artifactId>demoapi</artifactId>
+            <version>${version}</version>
+        </dependency>
 
-		<!-- 测试组件 -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope> <!-- 这是测试组件，只需要在测试阶段使用，不会被打包 -->
-		</dependency>
+        <!-- spring-boot quartz -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-quartz</artifactId>
+        </dependency>
 
-		<!-- 开发组件, 动态编译 -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-devtools</artifactId>
-			<optional>true</optional> <!-- 这是开发组件，因此依赖不需要被自动继承 -->
-		</dependency>
-	</dependencies>
+        <!-- 测试组件 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+            <!-- 这是测试组件，只需要在测试阶段使用，不会被打包 -->
+        </dependency>
 
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-				<configuration>
-					<!--fork :  如果没有该项配置，这个devtools不会起作用，即应用不会restart -->
-					<fork>true</fork>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <!-- 一般的maven项目的打包命令，不会把依赖的jar包也打包进去的，只是会放在jar包的同目录下，能够引用就可以了 -->
+            <!-- 但是spring-boot-maven-plugin插件，会将依赖的jar包全部打包进去。 -->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
 </project>

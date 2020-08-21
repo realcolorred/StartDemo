@@ -15,6 +15,7 @@
     <description>Demo project for Spring Boot</description>
 
     <dependencies>
+
         <dependency>
             <groupId>com.example</groupId>
             <artifactId>pubserv</artifactId>
@@ -34,24 +35,11 @@
             <scope>test</scope> <!-- 这是测试组件，只需要在测试阶段使用，不会被打包 -->
         </dependency>
 
-        <!-- 开发组件, 动态编译 -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-devtools</artifactId>
-            <optional>true</optional> <!-- 这是开发组件，因此依赖不需要被自动继承 -->
-        </dependency>
-
         <!-- 模板引擎-方便看看html页面，没什么大用 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
-
-        <!-- spring-boot security -->
-        <!--<dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-security</artifactId>
-        </dependency>-->
 
         <dependency>
             <groupId>org.aspectj</groupId>
@@ -95,13 +83,11 @@
 
     <build>
         <plugins>
+            <!-- 一般的maven项目的打包命令，不会把依赖的jar包也打包进去的，只是会放在jar包的同目录下，能够引用就可以了 -->
+            <!-- 但是spring-boot-maven-plugin插件，会将依赖的jar包全部打包进去。 -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <configuration>
-                    <!--fork :  如果没有该项配置，这个devtools不会起作用，即应用不会restart -->
-                    <fork>true</fork>
-                </configuration>
             </plugin>
         </plugins>
     </build>

@@ -32,18 +32,19 @@
             <groupId>at.twinformatics</groupId>
             <artifactId>eureka-consul-adapter</artifactId>
         </dependency>
+
     </dependencies>
 
     <build>
         <plugins>
+            <!-- 一般的maven项目的打包命令，不会把依赖的jar包也打包进去的，只是会放在jar包的同目录下，能够引用就可以了 -->
+            <!-- 但是spring-boot-maven-plugin插件，会将依赖的jar包全部打包进去。 -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <configuration>
-                    <fork>true</fork>
-                </configuration>
             </plugin>
 
+            <!-- 使用插件指定项目源码的jdk版本，编译后的jdk版本，以及编码 -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
