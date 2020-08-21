@@ -53,8 +53,21 @@ jdbc:
     username: root
     password: root
 
-com.neo:
-  title: 2333
-  description: 233333
+spring.auto:
+  isOpen: true
+  openPage: /swagger-ui.html
 
-spring.thymeleaf.prefix: classpath:/page/
+jedis.pool:
+  host: 127.0.0.1
+  port: 6379
+
+swagger:
+  enable: true
+  basePackage: com.example.demo.controller
+  title: Restful服务API
+  description: Restful服务API文档
+  version: 3.0.0
+  basic:
+    enable: false
+    username: admin
+    password: 123456 #启用安全swagger访问

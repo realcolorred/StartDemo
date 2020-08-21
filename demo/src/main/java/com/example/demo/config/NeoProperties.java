@@ -9,10 +9,10 @@ import org.springframework.stereotype.Component;
 * */
 @Component
 public class NeoProperties {
-    @Value("${com.neo.title}")
+    @Value("${com.neo.title:123}")
     private String title;
 
-    @Value("${com.neo.description}")
+    @Value("${com.neo.description:123}")
     private String description;
 
     public String getTitle() {

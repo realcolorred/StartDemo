@@ -1,5 +1,10 @@
+spring:
+  application:
+    name: gateway
+
 #端口
-server.port: 8888
+server:
+  port: 8888
 
 eureka:
   instance:
@@ -15,10 +20,29 @@ eureka:
     register.with.eureka: true #是否注册到eureka
     instance-info-replication-interval-seconds: 5 #每隔5秒扫描一次本地实例，如果有变化向服务重新注册
 
+# 签名密钥
+token.secret: 6af24872a460ecd9951cc8d822acb76e
+
 #redis配置，用于请求限流
 spring.redis:
   host: 127.0.0.1
   port: 6379
 
-# 签名密钥
-token.secret: 6af24872a460ecd9951cc8d822acb76e
+spring.auto:
+  isOpen: true
+  openPage: /
+
+jedis.pool:
+  host: 127.0.0.1
+  port: 6379
+
+swagger:
+  enable: true
+  basePackage: com.example.gateway.controller
+  title: Restful服务API
+  description: Restful服务API文档
+  version: 3.0.0
+  basic:
+    enable: true
+    username: admin
+    password: 123456 #启用安全swagger访问

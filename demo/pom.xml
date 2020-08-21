@@ -35,12 +35,6 @@
             <scope>test</scope> <!-- 这是测试组件，只需要在测试阶段使用，不会被打包 -->
         </dependency>
 
-        <!-- 模板引擎-方便看看html页面，没什么大用 -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-thymeleaf</artifactId>
-        </dependency>
-
         <dependency>
             <groupId>org.aspectj</groupId>
             <artifactId>aspectjweaver</artifactId>
