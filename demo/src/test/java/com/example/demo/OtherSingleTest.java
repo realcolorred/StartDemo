@@ -1,5 +1,8 @@
 package com.example.demo;
 
+import io.micrometer.core.instrument.Metrics;
+import io.micrometer.core.instrument.Timer;
+import io.micrometer.core.instrument.simple.SimpleMeterRegistry;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -8,6 +11,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class OtherSingleTest {
 
@@ -19,6 +23,18 @@ public class OtherSingleTest {
     @AfterClass
     public static void afterTest() {
         //System.out.println("============测试结束================");
+    }
+
+    @Test
+    public void metricsTest() {
+        Metrics.addRegistry(new SimpleMeterRegistry());
+        Timer timer = Metrics.timer("method.cost.time", "method.name", "测试");
+        timer.record(23, TimeUnit.MILLISECONDS);
+        timer.record(25, TimeUnit.MILLISECONDS);
+        timer.record(33, TimeUnit.MILLISECONDS);
+        timer.record(65, TimeUnit.MILLISECONDS);
+        timer.record(12, TimeUnit.MILLISECONDS);
+        System.out.print(timer.measure());
     }
 
     @Test

@@ -3,12 +3,10 @@ package com.example.task.task;
 import com.example.common.util.CollectionUtil;
 import com.example.pubserv.util.redis.RedisLockUtil;
 import com.example.pubserv.util.redis.bo.RedisLockBo;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -17,9 +15,8 @@ import java.util.concurrent.Future;
 /**
  * Created by lenovo on 2019/9/12.
  */
+@Slf4j
 public abstract class BaseJob<T> {
-
-    protected Logger logger = LoggerFactory.getLogger(this.getClass());
 
     public abstract List<T> getTasks();
 
@@ -43,7 +40,7 @@ public abstract class BaseJob<T> {
                         lockAndDoTask(task);
                         return true;
                     } catch (Throwable t) {
-                        logger.error("", t);
+                        log.error("", t);
                         return false;
                     }
                 });
@@ -54,7 +51,7 @@ public abstract class BaseJob<T> {
                 try {
                     future.get();
                 } catch (InterruptedException | ExecutionException e) {
-                    logger.error("", e);
+                    log.error("", e);
                 }
             }
 
@@ -63,7 +60,7 @@ public abstract class BaseJob<T> {
                 try {
                     es.shutdown();
                 } catch (Throwable t) {
-                    logger.error("", t);
+                    log.error("", t);
                 }
             }
         }
@@ -77,10 +74,10 @@ public abstract class BaseJob<T> {
             if (redisLockBo.isLock()) {
                 doTask(task);
             } else {
-                logger.debug("获取该数据：{}的锁失败，不执行定时任务。", lockKey);
+                log.debug("获取该数据：{}的锁失败，不执行定时任务。", lockKey);
             }
         } catch (Exception e) {
-            logger.error("加锁失败或者任务执行出错。", e);
+            log.error("加锁失败或者任务执行出错。", e);
         } finally {
             if (redisLockBo != null) {
                 RedisLockUtil.ulock(redisLockBo);

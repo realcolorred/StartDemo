@@ -55,12 +55,6 @@
             <artifactId>apm-toolkit-logback-1.x</artifactId>
         </dependency>
 
-        <!-- micrometer是一款监控指标的度量类库 -->
-        <dependency>
-            <groupId>io.micrometer</groupId>
-            <artifactId>micrometer-registry-prometheus</artifactId>
-        </dependency>
-
         <!-- spring-boot mybatis -->
         <dependency>
             <groupId>org.mybatis.spring.boot</groupId>

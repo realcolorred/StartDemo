@@ -33,7 +33,7 @@ public class AtuoOpenWebConfig implements CommandLineRunner {
             Runtime run = Runtime.getRuntime();
             try {
                 run.exec("cmd /c start " + url);
-                logger.info("=========================== 项目启动成功 =================================");
+                logger.info("=========================== 项目启动成功自动打开网址{} =================================", url);
             } catch (Exception e) {
                 logger.error("", e);
             }

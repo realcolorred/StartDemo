@@ -55,7 +55,7 @@ jdbc:
 
 spring.auto:
   isOpen: true
-  openPage: /swagger-ui.html
+  openPage: /actuator/prometheus
 
 jedis.pool:
   host: 127.0.0.1
@@ -71,3 +71,8 @@ swagger:
     enable: false
     username: admin
     password: 123456 #启用安全swagger访问
+
+# 暴露所有端口（不推荐）
+management.endpoints.web.exposure.include: '*'
+# 给当前应用的所有metrics指标都加上应用名称标签
+management.metrics.tags.application: ${spring.application.name}

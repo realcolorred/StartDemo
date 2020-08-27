@@ -5,15 +5,18 @@ public class StringUtil {
     public static final String EMPTY = "";
 
     public static boolean isEmpty(String str) {
-        if (str == null || "".equals(str)) {
-            return true;
-        } else {
-            return false;
-        }
-
+        return str == null || "".equals(str);
     }
 
     public static boolean isNotEmpty(String str) {
         return !isEmpty(str);
+    }
+
+    public static boolean isBlack(String str) {
+        return str == null || "".equals(str) || "".equals(str.trim());
+    }
+
+    public static boolean isNotBlack(String str) {
+        return !isBlack(str);
     }
 }

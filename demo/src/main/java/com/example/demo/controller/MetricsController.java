@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
  * Created by new on 2020/6/9.
  */
 @RestController
-@RequestMapping("/metrics")
+@RequestMapping("/metr")
 public class MetricsController {
 
     @GetMapping
