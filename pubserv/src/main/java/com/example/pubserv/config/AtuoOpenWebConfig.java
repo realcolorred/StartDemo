@@ -8,6 +8,8 @@ import org.springframework.stereotype.Component;
 
 /**
  * Created by new on 2020/8/21.
+ *
+ * 启动成功自动打开页面，开发专用，默认关闭。
  */
 @Component
 public class AtuoOpenWebConfig implements CommandLineRunner {
@@ -17,7 +19,7 @@ public class AtuoOpenWebConfig implements CommandLineRunner {
     @Value("${spring.auto.isOpen:false}")
     private boolean isOpen;
 
-    @Value("${server.host:localhost}")
+    @Value("${server.host:127.0.0.1}")
     private String host;
 
     @Value("${server.port:8080}")

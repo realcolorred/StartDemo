@@ -7,10 +7,11 @@ import java.util.Date;
 
 public class DateUtil {
 
-    public static final String YYYYMMDDHHMMSS      = "yyyyMMddHHmmss";
-    public static final String YYYYMMDDHHMMSSSSS   = "yyyyMMddHHmmssSSS";
-    public static final String YYYYMMDDHHMMSS_READ = "yyyy-MM-dd HH:mm:ss";
-    public static final Date   NULL                = new Date(0);
+    public static final String YYYYMMDDHHMMSS         = "yyyyMMddHHmmss";
+    public static final String YYYYMMDDHHMMSSSSS      = "yyyyMMddHHmmssSSS";
+    public static final String YYYYMMDDHHMMSS_READ    = "yyyy-MM-dd HH:mm:ss";
+    public static final String YYYYMMDDHHMMSSSSS_READ = "yyyy-MM-dd HH:mm:ss.SSS";
+    public static final Date   NULL                   = new Date(0);
 
     public static String dateToString(Date date) {
         return dateToString(date, YYYYMMDDHHMMSS);

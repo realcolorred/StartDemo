@@ -12,11 +12,11 @@ public class StringUtil {
         return !isEmpty(str);
     }
 
-    public static boolean isBlack(String str) {
+    public static boolean isBlank(String str) {
         return str == null || "".equals(str) || "".equals(str.trim());
     }
 
     public static boolean isNotBlack(String str) {
-        return !isBlack(str);
+        return !isBlank(str);
     }
 }
