@@ -27,22 +27,3 @@ token.secret: 6af24872a460ecd9951cc8d822acb76e
 spring.redis:
   host: 127.0.0.1
   port: 6379
-
-spring.auto:
-  isOpen: true
-  openPage: /
-
-jedis.pool:
-  host: 127.0.0.1
-  port: 6379
-
-swagger:
-  enable: true
-  basePackage: com.example.gateway.controller
-  title: Restful服务API
-  description: Restful服务API文档
-  version: 3.0.0
-  basic:
-    enable: true
-    username: admin
-    password: 123456 #启用安全swagger访问

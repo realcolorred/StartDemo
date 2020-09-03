@@ -9,7 +9,6 @@ import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.example.gateway.common.JwtConst;
 import com.example.gateway.config.TokenSecretConfig;
-import com.example.pubserv.util.SpringBeanUtils;
 
 import java.util.Date;
 
@@ -23,8 +22,10 @@ public class JWTSigner {
         if (verifier == null) {
             synchronized (JWTSigner.class) {
                 if (verifier == null) {
-                    TokenSecretConfig tokenSecretConfig = SpringBeanUtils.getBean(TokenSecretConfig.class);
-                    algorithm = Algorithm.HMAC256(tokenSecretConfig.getTokenSecret());
+                    // TODO 待实现
+                    //TokenSecretConfig tokenSecretConfig = SpringBeanUtils.getBean(TokenSecretConfig.class);
+                    //algorithm = Algorithm.HMAC256(tokenSecretConfig.getTokenSecret());
+                    algorithm = Algorithm.HMAC256("123123");
                     verifier = JWT.require(algorithm).build();
                 }
             }

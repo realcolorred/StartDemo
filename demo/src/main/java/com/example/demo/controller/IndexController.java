@@ -2,7 +2,7 @@ package com.example.demo.controller;
 
 import com.example.common.exception.DemoException;
 import com.example.common.exception.ErrorMessage;
-import com.example.common.responses.ApiRespResult;
+import com.example.common.request.ApiRespResult;
 import com.example.common.util.DateUtil;
 import com.example.demo.bo.User;
 import io.swagger.annotations.Api;

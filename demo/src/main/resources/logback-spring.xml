@@ -4,7 +4,7 @@
 
     <property name="LOG_HOME" value="./myLog/demo"/>
     <property name="ENCODING" value="UTF-8"/>
-    <property name="PATTERN" value="[%t]%d{HH:mm:ss.SSS} [%thread] %-5level %logger{48} - %msg%n"/>
+    <property name="PATTERN" value="[%thread] %d{HH:mm:ss.SSS} %-5level %logger{48} -[%X{REQUEST_ID}]- %msg%n"/>
     <property name="LOG_EXTFILE" value="log"/>
     <property name="MAX_FILE_SIZE" value="10MB"/>
     <property name="MAX_HIS_DAY" value="7"/>
@@ -12,8 +12,11 @@
 
     <!-- 控制台输出 -->
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
-        <encoder>
-            <pattern>${PATTERN}</pattern>
+        <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+            <layout class="org.apache.skywalking.apm.toolkit.log.logback.v1.x.TraceIdPatternLogbackLayout">
+                <pattern>${PATTERN}</pattern>
+            </layout>
+            <charset>${ENCODING}</charset>
         </encoder>
     </appender>
 
@@ -24,8 +27,10 @@
             <maxHistory>${MAX_HIS_DAY}</maxHistory>
             <totalSizeCap>${TOTAL_FILE_SIZE}</totalSizeCap>
         </rollingPolicy>
-        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-            <pattern>${PATTERN}</pattern>
+        <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+            <layout class="org.apache.skywalking.apm.toolkit.log.logback.v1.x.TraceIdPatternLogbackLayout">
+                <pattern>${PATTERN}</pattern>
+            </layout>
             <charset>${ENCODING}</charset>
         </encoder>
     </appender>
@@ -37,8 +42,10 @@
             <maxHistory>${MAX_HIS_DAY}</maxHistory>
             <totalSizeCap>${TOTAL_FILE_SIZE}</totalSizeCap>
         </rollingPolicy>
-        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-            <pattern>${PATTERN}</pattern>
+        <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+            <layout class="org.apache.skywalking.apm.toolkit.log.logback.v1.x.TraceIdPatternLogbackLayout">
+                <pattern>${PATTERN}</pattern>
+            </layout>
             <charset>${ENCODING}</charset>
         </encoder>
     </appender>
@@ -50,8 +57,10 @@
             <maxHistory>${MAX_HIS_DAY}</maxHistory>
             <totalSizeCap>${TOTAL_FILE_SIZE}</totalSizeCap>
         </rollingPolicy>
-        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-            <pattern>${PATTERN}</pattern>
+        <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+            <layout class="org.apache.skywalking.apm.toolkit.log.logback.v1.x.TraceIdPatternLogbackLayout">
+                <pattern>${PATTERN}</pattern>
+            </layout>
             <charset>${ENCODING}</charset>
         </encoder>
     </appender>

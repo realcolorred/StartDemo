@@ -36,6 +36,12 @@
             <artifactId>swagger-annotations</artifactId>
         </dependency>
 
+        <!-- spring相关工具类需要 -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+        </dependency>
+
     </dependencies>
 
 

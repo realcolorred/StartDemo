@@ -1,5 +1,6 @@
-package com.example.common.responses;
+package com.example.common.request;
 
+import com.example.common.util.StringUtil;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -19,6 +20,8 @@ public class ApiRespResult<T> {
     private String code = "0";
     @ApiModelProperty("错误信息")
     private String message;
+    @ApiModelProperty("错误请求标识")
+    private String requestId;
     @ApiModelProperty("数据")
     private T      data;
 
@@ -40,8 +43,8 @@ public class ApiRespResult<T> {
         return fail(String.valueOf(code), message);
     }
 
-    public static <T> ApiRespResult<T> fail(int code, T data, String message) {
-        return fail(String.valueOf(code), data, message);
+    public static <T> ApiRespResult<T> fail(int code, String requestId, String message) {
+        return fail(String.valueOf(code), requestId, message);
     }
 
     public static <T> ApiRespResult<T> fail(String code) {
@@ -55,11 +58,11 @@ public class ApiRespResult<T> {
         return result;
     }
 
-    public static <T> ApiRespResult<T> fail(String code, T data, String message) {
+    public static <T> ApiRespResult<T> fail(String code, String requestId, String message) {
         ApiRespResult<T> result = new ApiRespResult<T>();
         result.setCode(code);
         result.setMessage(message);
-        result.setData(data);
+        result.setRequestId(requestId);
         return result;
     }
 }

@@ -1,7 +1,12 @@
 package com.example.pubserv.config;
 
+import com.alibaba.fastjson.JSON;
+import com.example.common.constant.LogConstants;
 import com.example.common.exception.DemoException;
-import com.example.common.responses.ApiRespResult;
+import com.example.common.request.ApiRespResult;
+import com.example.common.util.DateUtil;
+import com.example.common.util.StringUtil;
+import com.example.common.util.UUIDUtil;
 import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.Metrics;
 import io.micrometer.core.instrument.Tags;
@@ -13,13 +18,17 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.slf4j.MDC;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.Method;
+import java.util.Date;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -55,6 +64,11 @@ public class MethodRunTimerAspect {
         Signature signature = joinPoint.getSignature();
         MethodSignature methodSignature = (MethodSignature) signature;
         Method method = methodSignature.getMethod();
+        Date startDate = new Date();
+        String uuid = UUIDUtil.getUUID();
+
+        // 请求开始日志
+        writeRequestLog(requestURI, joinPoint.getArgs(), uuid, startDate);
 
         // timer示例，记录方法执行的执行的次数，最长耗时。参数名称为 method_cost_time_XXXXX，通过 /actuator/prometheus 访问。
         Timer timer = Metrics.timer("method.cost.time", "method.name", method.toString(), "method.url", requestURI);
@@ -84,13 +98,58 @@ public class MethodRunTimerAspect {
             log.error("", holder.throwable);
             if (holder.throwable instanceof DemoException) {
                 DemoException demoException = (DemoException) holder.throwable;
-                return ApiRespResult.fail(demoException.getCode(), demoException.getMessage());
+                result = ApiRespResult.fail(demoException.getCode(), MDC.get(LogConstants.REQUEST_ID), demoException.getMessage());
             } else {
-                return ApiRespResult.fail(HttpStatus.INTERNAL_SERVER_ERROR.value(), holder.throwable.getMessage());
+                result = ApiRespResult
+                    .fail(HttpStatus.INTERNAL_SERVER_ERROR.value(), MDC.get(LogConstants.REQUEST_ID), holder.throwable.getMessage());
+            }
+        } else {
+            if (result instanceof ApiRespResult) {
+                ((ApiRespResult) result).setRequestId(MDC.get(LogConstants.REQUEST_ID));
             }
         }
 
+        // 请求结束日志
+        writeResponseLog(result, uuid, startDate);
+
         return result;
+    }
+
+    private void writeRequestLog(String url, Object[] requests, String uuid, Date startDate) {
+        String requestParameter = "";
+        for (Object request : requests) {
+            if (request instanceof MultipartFile || request instanceof HttpServletRequest || request instanceof HttpServletResponse) {
+                continue;
+            }
+
+            String requestStr = request.toString();
+            try {
+                requestStr = JSON.toJSONString(request);
+            } catch (Exception e) {
+                //
+            }
+            if (StringUtil.isNotEmpty(requestParameter)) {
+                requestParameter += " " + requestStr;
+            } else {
+                requestParameter += requestStr;
+            }
+        }
+        String startTime = DateUtil.dateToString(startDate, DateUtil.YYYYMMDDHHMMSSSSS_READ);
+        log.info("REQ: {} START, START_TIME:{}, URL:{}, REQUEST_PARAMETER:{}", uuid, startTime, url, requestParameter);
+    }
+
+    private void writeResponseLog(Object response, String uuid, Date startDate) {
+        Date endDate = new Date();
+        String startTime = DateUtil.dateToString(startDate, DateUtil.YYYYMMDDHHMMSSSSS_READ);
+        String endTime = DateUtil.dateToString(endDate, DateUtil.YYYYMMDDHHMMSSSSS_READ);
+        long costTime = endDate.getTime() - startDate.getTime();
+        String result = response.toString();
+        try {
+            result = JSON.toJSONString(response);
+        } catch (Exception e) {
+            //
+        }
+        log.info("REQ: {} END, DATE FROM:{} TO {} COST:{}ms, RESPONSE:{}", uuid, startTime, endTime, costTime, result);
     }
 
     private class ThrowableHolder {
