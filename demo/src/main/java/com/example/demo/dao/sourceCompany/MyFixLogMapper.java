@@ -1,6 +1,6 @@
 package com.example.demo.dao.sourceCompany;
 
-import com.example.demo.entity.DblogEntity;
+import com.example.demo.entity.DatabaseLog;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 
@@ -13,8 +13,8 @@ import java.util.List;
 public interface MyFixLogMapper {
 
     @Select("select * from dblog where create_date > DATE_ADD(now(),INTERVAL - 300 day) ORDER BY create_date desc limit 100 ")
-    List<DblogEntity> getDefault();
+    List<DatabaseLog> getDefault();
 
     @Select("select * from dblog where id = #{id}")
-    DblogEntity getOne(Long id);
+    DatabaseLog getOne(Long id);
 }

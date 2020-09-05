@@ -1,6 +1,6 @@
 package com.example.demo.dao.sourceCompany;
 
-import com.example.demo.entity.KingEntity;
+import com.example.demo.entity.King;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
@@ -14,19 +14,19 @@ import java.util.List;
 public interface KingMgrMapper {
 
     @Select("select * from king where id = #{id} limit 1")
-    KingEntity getOne(Integer id);
+    King getOne(Integer id);
 
     @Select("select * from king order by rule_start_int limit 1000")
-    List<KingEntity> getList();
+    List<King> getList();
 
-    int insert(KingEntity entity);
+    int insert(King entity);
 
     @Delete("delete from king where id = #{id}")
     int deleteById(Integer id);
 
     @Delete("delete from king where id = #{id}")
-    int delete(KingEntity entity);
+    int delete(King entity);
 
-    int update(KingEntity entity);
+    int update(King entity);
 
 }

@@ -1,6 +1,6 @@
 package com.example.demo.controller;
 
-import com.example.demo.entity.KingEntity;
+import com.example.demo.entity.King;
 import com.example.demo.service.IKingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -24,7 +23,7 @@ public class KingController {
     private IKingService kingService;
 
     @GetMapping({ "/query", "/", "" })
-    public List<KingEntity> query() {
+    public List<King> query() {
         return kingService.queryKingList();
     }
 
@@ -34,7 +33,7 @@ public class KingController {
     }
 
     @PostMapping(value = "/insertKing")
-    public Integer insertKing(@Validated KingEntity entity) {
+    public Integer insertKing(@Validated King entity) {
         return kingService.insertKing(entity);
     }
 }

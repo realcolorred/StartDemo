@@ -10,6 +10,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,22 +31,19 @@ import java.util.List;
 @Api(description = "默认响应")
 @RestController
 @RequestMapping
+@Slf4j
 public class IndexController {
 
     @ApiOperation("日期返回")
     @GetMapping(value = { "/", "" })
     public String index() {
-        return getHello();
+        return "启动成功,现在的时间是" + DateUtil.dateToStringRead(new Date());
     }
 
     @ApiOperation("延迟日期返回")
     @GetMapping(value = "/delay")
     public String delay() throws InterruptedException {
         Thread.sleep(3000);
-        return getHello();
-    }
-
-    private String getHello() {
         return "启动成功,现在的时间是" + DateUtil.dateToStringRead(new Date());
     }
 
@@ -53,7 +51,7 @@ public class IndexController {
     @GetMapping("/test/get")
     public ApiRespResult<List<User>> getTest(@RequestParam(value = "error", required = false) boolean error) {
         if (error) {
-            throw new DemoException(ErrorMessage.REQUEST_PARAM_ERROR, "需要抛出失败");
+            throw new DemoException(ErrorMessage.REQUEST_PARAM_ERROR, "测试！抛出错误！");
         }
         List<User> result = new ArrayList<>();
         result.add(new User("123", "123"));
@@ -82,11 +80,12 @@ public class IndexController {
     @ApiOperation("swagger注解测试")
     @PutMapping(value = "/test/{path1}/{path2}")
     @ApiResponses(value = { @ApiResponse(code = 0, message = "成功") })
-    public String fullMethod2(@ApiParam("参数1") @RequestParam(value = "param1", required = false, defaultValue = "swagger1") String param1,
-                              @ApiParam("参数2") @RequestParam(value = "param2", required = false, defaultValue = "swagger2") String param2,
-                              @ApiParam("必填参数1") @PathVariable(name = "path1") String path1,
-                              @ApiParam("必填参数2") @PathVariable(name = "path2") String path2,
-                              @ApiParam("body参数") @RequestBody(required = false) User user) {
-        return param1 + "\n" + param2 + "\n" + path1 + "\n" + path2 + "\n" + user;
+    public ApiRespResult<String> fullMethod2(
+        @ApiParam("参数1") @RequestParam(value = "param1", required = false, defaultValue = "swagger1") String param1,
+        @ApiParam("参数2") @RequestParam(value = "param2", required = false, defaultValue = "swagger2") String param2,
+        @ApiParam("必填参数1") @PathVariable(name = "path1") String path1, @ApiParam("必填参数2") @PathVariable(name = "path2") String path2,
+        @ApiParam("body参数") @RequestBody(required = false) User user) {
+
+        return ApiRespResult.success(param1 + "\n" + param2 + "\n" + path1 + "\n" + path2 + "\n" + user);
     }
 }

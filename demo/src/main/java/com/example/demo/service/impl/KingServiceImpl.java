@@ -2,7 +2,7 @@ package com.example.demo.service.impl;
 
 import com.example.common.util.DateUtil;
 import com.example.demo.dao.sourceCompany.KingMgrMapper;
-import com.example.demo.entity.KingEntity;
+import com.example.demo.entity.King;
 import com.example.demo.service.IKingService;
 import com.example.pubserv.util.ValidatorUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,20 +20,20 @@ public class KingServiceImpl extends BaseService implements IKingService {
     private KingMgrMapper kingMgrMapper;
 
     @Override
-    public List<KingEntity> queryKingList() {
+    public List<King> queryKingList() {
         return kingMgrMapper.getList();
     }
 
     @Override
-    public int updateKing(KingEntity entity) {
-        if (!isVaildNum(entity.getId())){
+    public int updateKing(King entity) {
+        if (!isVaildNum(entity.getId())) {
             return 0;
         }
         return kingMgrMapper.update(entity);
     }
 
     @Override
-    public int insertKing(KingEntity entity) {
+    public int insertKing(King entity) {
         String msg = ValidatorUtil.validate(entity);
         if (isNotEmpty(msg)) {
             logger.warn("新增数据:" + entity + ",不合法:" + msg);
@@ -53,10 +53,10 @@ public class KingServiceImpl extends BaseService implements IKingService {
 
     @Override
     public int formatData() {
-        List<KingEntity> list = kingMgrMapper.getList();
+        List<King> list = kingMgrMapper.getList();
         if (isNotEmpty(list)) {
-            for (KingEntity entity : list) {
-                KingEntity newEntity = new KingEntity();
+            for (King entity : list) {
+                King newEntity = new King();
                 newEntity.setId(entity.getId());
                 if (isNotEmpty(entity.getRuleStart())) {
                     newEntity.setRuleStartInt(DateUtil.getTimes(entity.getRuleStart()));

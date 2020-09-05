@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.common.request.ApiRespResult;
 import com.example.demo.service.IServantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,12 +16,14 @@ public class ServantController {
     private IServantService servantService;
 
     @PostMapping(value = "/insertAsTest")
-    public int insertServantTest() {
-        return servantService.insertServant("我是一个测试");
+    public ApiRespResult<Integer> insertServantTest() {
+        int ret = servantService.insertServant("我是一个测试");
+        return ApiRespResult.success(ret);
     }
 
     @PostMapping(value = "/insert")
-    public int insertServant(@RequestParam String name) {
-        return servantService.insertServant(name);
+    public ApiRespResult<Integer> insertServant(@RequestParam String name) {
+        int ret = servantService.insertServant(name);
+        return ApiRespResult.success(ret);
     }
 }

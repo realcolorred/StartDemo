@@ -1,6 +1,6 @@
 package com.example.demo.service;
 
-import com.example.demo.entity.KingEntity;
+import com.example.demo.entity.King;
 
 import java.util.List;
 
@@ -9,11 +9,11 @@ import java.util.List;
  */
 public interface IKingService {
 
-    List<KingEntity> queryKingList();
+    List<King> queryKingList();
 
-    int updateKing(KingEntity entity);
+    int updateKing(King entity);
 
-    int insertKing(KingEntity entity);
+    int insertKing(King entity);
 
     int formatData();
 }

@@ -2,7 +2,7 @@
 <configuration scan="true" scanPeriod="10000" debug="false">
     <contextName>mydemo.one</contextName>
 
-    <property name="LOG_HOME" value="./myLog/eureka"/>
+    <property name="LOG_HOME" value="F:/someLog/demoProject/eureka"/>
     <property name="ENCODING" value="UTF-8"/>
     <property name="PATTERN" value="[%t]%d{HH:mm:ss.SSS} [%thread] %-5level %logger{48} - %msg%n"/>
     <property name="LOG_EXTFILE" value="log"/>

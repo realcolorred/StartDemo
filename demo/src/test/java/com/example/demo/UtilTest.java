@@ -3,7 +3,7 @@ package com.example.demo;
 import com.example.common.util.DateUtil;
 import com.example.common.util.UUIDUtil;
 import com.example.demo.bo.KDM;
-import com.example.demo.entity.KingEntity;
+import com.example.demo.entity.King;
 import com.example.demo.util.RSA.RSAEncode;
 import com.example.demo.util.RSA.RSASign;
 import com.example.demo.util.redis.RedisLockUtil;
@@ -72,7 +72,7 @@ public class UtilTest {
 
     @Test
     public void ValidatorUtil() {
-        KingEntity entity = new KingEntity();
+        King entity = new King();
         entity.setAge(11100L);
         entity.setBirthday("-2019/11/1");
         System.out.println(ValidatorUtil.validate(entity));

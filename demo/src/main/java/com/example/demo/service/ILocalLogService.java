@@ -1,6 +1,6 @@
 package com.example.demo.service;
 
-import com.example.demo.entity.DblogEntity;
+import com.example.demo.entity.DatabaseLog;
 
 import java.util.List;
 
@@ -9,7 +9,7 @@ import java.util.List;
  */
 public interface ILocalLogService {
 
-    public DblogEntity getMyFixLogOfOne(Long id);
+    public DatabaseLog getMyFixLogOfOne(Long id);
 
-    public List<DblogEntity> getMyFixLogDefault();
+    public List<DatabaseLog> getMyFixLogDefault();
 }

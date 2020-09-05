@@ -27,6 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Date;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -96,12 +97,17 @@ public class MethodRunTimerAspect {
         if (holder.throwable != null) {
             num.set(0);
             log.error("", holder.throwable);
-            if (holder.throwable instanceof DemoException) {
-                DemoException demoException = (DemoException) holder.throwable;
+            Throwable throwable = holder.throwable;
+
+            // 反射目标异常特殊处理，取出异常
+            if (throwable instanceof InvocationTargetException) {
+                throwable = ((InvocationTargetException) throwable).getTargetException();
+            }
+            if (throwable instanceof DemoException) {
+                DemoException demoException = (DemoException) throwable;
                 result = ApiRespResult.fail(demoException.getCode(), MDC.get(LogConstants.REQUEST_ID), demoException.getMessage());
             } else {
-                result = ApiRespResult
-                    .fail(HttpStatus.INTERNAL_SERVER_ERROR.value(), MDC.get(LogConstants.REQUEST_ID), holder.throwable.getMessage());
+                result = ApiRespResult.fail(HttpStatus.INTERNAL_SERVER_ERROR.value(), MDC.get(LogConstants.REQUEST_ID), throwable.toString());
             }
         } else {
             if (result instanceof ApiRespResult) {
@@ -118,7 +124,8 @@ public class MethodRunTimerAspect {
     private void writeRequestLog(String url, Object[] requests, String uuid, Date startDate) {
         String requestParameter = "";
         for (Object request : requests) {
-            if (request instanceof MultipartFile || request instanceof HttpServletRequest || request instanceof HttpServletResponse) {
+            if (request == null || request instanceof MultipartFile || request instanceof HttpServletRequest ||
+                request instanceof HttpServletResponse) {
                 continue;
             }
 
@@ -126,7 +133,7 @@ public class MethodRunTimerAspect {
             try {
                 requestStr = JSON.toJSONString(request);
             } catch (Exception e) {
-                //
+                // 能转就转，失败就算了
             }
             if (StringUtil.isNotEmpty(requestParameter)) {
                 requestParameter += " " + requestStr;
@@ -147,7 +154,7 @@ public class MethodRunTimerAspect {
         try {
             result = JSON.toJSONString(response);
         } catch (Exception e) {
-            //
+            // 能转就转，失败就算了
         }
         log.info("REQ: {} END, DATE FROM:{} TO {} COST:{}ms, RESPONSE:{}", uuid, startTime, endTime, costTime, result);
     }

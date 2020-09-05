@@ -1,7 +1,7 @@
 package com.example.demo.service.impl;
 
 import com.example.demo.dao.sourceCompany.MyFixLogMapper;
-import com.example.demo.entity.DblogEntity;
+import com.example.demo.entity.DatabaseLog;
 import com.example.demo.service.ILocalLogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,7 +18,7 @@ public class LocalLogServiceImpl extends BaseService implements ILocalLogService
     private MyFixLogMapper myFixLogMapper;
 
     @Override
-    public DblogEntity getMyFixLogOfOne(Long id) {
+    public DatabaseLog getMyFixLogOfOne(Long id) {
         if (isVaildNum(id)) {
             return myFixLogMapper.getOne(id);
         }
@@ -26,7 +26,7 @@ public class LocalLogServiceImpl extends BaseService implements ILocalLogService
     }
 
     @Override
-    public List<DblogEntity> getMyFixLogDefault() {
+    public List<DatabaseLog> getMyFixLogDefault() {
         return myFixLogMapper.getDefault();
     }
 }

@@ -6,7 +6,8 @@ package com.example.common.exception;
 public enum ErrorMessage {
 
     REQUEST_FAIL("EX500", "请求失败"),
-    REQUEST_PARAM_ERROR("EX501", "参数错误：{0}");
+    REQUEST_PARAM_ERROR("EX501", "参数错误：{0}"),
+    REQUEST_NOFOUND_ERROR("EX502", "方法{0}.{1}不存在或参数错误！");
 
     private String code;
     private String msg;
