@@ -7,7 +7,11 @@ public enum ErrorMessage {
 
     REQUEST_FAIL("EX500", "请求失败"),
     REQUEST_PARAM_ERROR("EX501", "参数错误：{0}"),
-    REQUEST_NOFOUND_ERROR("EX502", "方法{0}.{1}不存在或参数错误！");
+    REQUEST_NOFOUND_ERROR("EX502", "方法[{0}.{1}]不存在或参数错误!"),
+
+    DATA_INSERT_FAIL("EX600", "新增失败,{0}!"),
+    DATA_INSERT_FAIL_EXIST("EX601", "新增失败,数据[{0}]已经存在!");
+
 
     private String code;
     private String msg;

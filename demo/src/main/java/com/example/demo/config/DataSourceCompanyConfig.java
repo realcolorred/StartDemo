@@ -1,18 +1,21 @@
 package com.example.demo.config;
 
+import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 import com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean;
+import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.session.SqlSessionFactory;
-import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.aop.Advisor;
 import org.springframework.aop.aspectj.AspectJExpressionPointcut;
 import org.springframework.aop.support.DefaultPointcutAdvisor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.interceptor.*;
@@ -120,6 +123,9 @@ public class DataSourceCompanyConfig {
         return new DefaultPointcutAdvisor(pointcut, transactionInterceptor);
     }
 
+    @Autowired
+    private PaginationInterceptor paginationInterceptor;
+
     /**
      * 会话管理
      *
@@ -129,11 +135,16 @@ public class DataSourceCompanyConfig {
      */
     @Bean(name = "companySqlSessionFactory")
     public SqlSessionFactory sqlSessionFactory(@Qualifier("companyDataSource") DataSource dataSource) throws Exception {
-        MybatisSqlSessionFactoryBean bean = new MybatisSqlSessionFactoryBean();
-        bean.setDataSource(dataSource);
+        MybatisSqlSessionFactoryBean factoryBean = new MybatisSqlSessionFactoryBean();
+        factoryBean.setDataSource(dataSource);
+
+        // mybatis plus 分页插件
+        Interceptor[] plugins = {paginationInterceptor};
+        factoryBean.setPlugins(plugins);
+
         // 设置ibatis的扫描包位置(类注解已经设置了,此处不再设置)
-        // bean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:com/example/demo/dao/sourceCompany"));
-        return bean.getObject();
+        //factoryBean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:com/example/demo/dao/sourceCompany"));
+        return factoryBean.getObject();
     }
 
     @Bean(name = "companySqlSessionTemplate")
