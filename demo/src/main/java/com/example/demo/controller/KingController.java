@@ -1,6 +1,6 @@
 package com.example.demo.controller;
 
-import com.example.demo.entity.King;
+import com.example.demo.dao.sourceCompany.entity.King;
 import com.example.demo.service.IKingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;

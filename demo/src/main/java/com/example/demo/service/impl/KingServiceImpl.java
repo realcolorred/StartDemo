@@ -1,8 +1,8 @@
 package com.example.demo.service.impl;
 
 import com.example.common.util.DateUtil;
-import com.example.demo.dao.sourceCompany.KingMgrMapper;
-import com.example.demo.entity.King;
+import com.example.demo.dao.sourceCompany.mapper.KingMgrMapper;
+import com.example.demo.dao.sourceCompany.entity.King;
 import com.example.demo.service.IKingService;
 import com.example.pubserv.util.ValidatorUtil;
 import org.springframework.beans.factory.annotation.Autowired;

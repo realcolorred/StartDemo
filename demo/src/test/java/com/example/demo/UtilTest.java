@@ -3,7 +3,7 @@ package com.example.demo;
 import com.example.common.util.DateUtil;
 import com.example.common.util.UUIDUtil;
 import com.example.demo.bo.KDM;
-import com.example.demo.entity.King;
+import com.example.demo.dao.sourceCompany.entity.King;
 import com.example.demo.util.RSA.RSAEncode;
 import com.example.demo.util.RSA.RSASign;
 import com.example.demo.util.redis.RedisLockUtil;

@@ -1,6 +1,6 @@
 package com.example.demo.service;
 
-import com.example.demo.entity.DatabaseLog;
+import com.example.demo.dao.sourceCompany.entity.DatabaseLog;
 
 import java.util.List;
 

@@ -1,6 +1,6 @@
 package com.example.demo.service;
 
-import com.example.demo.entity.King;
+import com.example.demo.dao.sourceCompany.entity.King;
 
 import java.util.List;
 

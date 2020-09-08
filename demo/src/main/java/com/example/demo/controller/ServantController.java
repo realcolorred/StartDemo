@@ -3,13 +3,11 @@ package com.example.demo.controller;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.common.exception.DemoException;
 import com.example.common.request.ApiRespResult;
-import com.example.demo.entity.Servant;
+import com.example.demo.dao.sourceCompany.entity.Servant;
 import com.example.demo.service.IServantService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 /**
  * @author zl
