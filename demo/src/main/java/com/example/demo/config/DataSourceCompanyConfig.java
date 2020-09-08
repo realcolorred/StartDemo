@@ -1,6 +1,5 @@
 package com.example.demo.config;
 
-import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 import com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean;
 import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -9,16 +8,19 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.aop.Advisor;
 import org.springframework.aop.aspectj.AspectJExpressionPointcut;
 import org.springframework.aop.support.DefaultPointcutAdvisor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.TransactionDefinition;
-import org.springframework.transaction.interceptor.*;
+import org.springframework.transaction.interceptor.NameMatchTransactionAttributeSource;
+import org.springframework.transaction.interceptor.RollbackRuleAttribute;
+import org.springframework.transaction.interceptor.RuleBasedTransactionAttribute;
+import org.springframework.transaction.interceptor.TransactionAttribute;
+import org.springframework.transaction.interceptor.TransactionInterceptor;
 
 import javax.sql.DataSource;
 import java.util.Collections;
@@ -32,10 +34,13 @@ import java.util.Map;
  * 1.设置dataSouce
  * 2 设置事务管理
  * 3 设置会话管理
+ *
+ * MapperScan
+ * mybatis-basePackages : 包扫描
+ * mybatis-sqlSessionTemplateRef : 引用的sql会话模板
  */
 @Configuration
-@MapperScan(basePackages = { "com.example.demo.dao.sourceCompany" },     // mybatis-basePackages : 包扫描
-    sqlSessionTemplateRef = "companySqlSessionTemplate")             // mybatis-sqlSessionTemplateRef : 引用的sql会话模板
+@MapperScan(basePackages = { "com.example.demo.dao.sourceCompany" }, sqlSessionTemplateRef = "companySqlSessionTemplate")
 public class DataSourceCompanyConfig {
 
     /**
@@ -123,9 +128,6 @@ public class DataSourceCompanyConfig {
         return new DefaultPointcutAdvisor(pointcut, transactionInterceptor);
     }
 
-    @Autowired
-    private PaginationInterceptor paginationInterceptor;
-
     /**
      * 会话管理
      *
@@ -134,12 +136,15 @@ public class DataSourceCompanyConfig {
      * @throws Exception
      */
     @Bean(name = "companySqlSessionFactory")
-    public SqlSessionFactory sqlSessionFactory(@Qualifier("companyDataSource") DataSource dataSource) throws Exception {
+    public SqlSessionFactory sqlSessionFactory(@Qualifier("companyDataSource") DataSource dataSource,
+                                               ObjectProvider<Interceptor[]> interceptorsProvider) throws Exception {
+
         MybatisSqlSessionFactoryBean factoryBean = new MybatisSqlSessionFactoryBean();
         factoryBean.setDataSource(dataSource);
 
-        // mybatis plus 分页插件
-        Interceptor[] plugins = {paginationInterceptor};
+        // mybatis plus分页 插件
+        // 防止全表更新与删除 插件
+        Interceptor[] plugins = interceptorsProvider.getIfAvailable();
         factoryBean.setPlugins(plugins);
 
         // 设置ibatis的扫描包位置(类注解已经设置了,此处不再设置)

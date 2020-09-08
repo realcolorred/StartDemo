@@ -4,14 +4,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Configuration;
 
 /**
  * Created by new on 2020/8/21.
  *
  * 启动成功自动打开页面，开发专用，默认关闭。
  */
-@Component
+@Configuration
 public class AtuoOpenWebConfig implements CommandLineRunner {
 
     private static Logger logger = LoggerFactory.getLogger(AtuoOpenWebConfig.class);

@@ -7,6 +7,8 @@ import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
+import java.util.Map;
+
 /**
  * Spring上下文管理器
  *
@@ -41,6 +43,10 @@ public class SpringBeanUtils implements ApplicationContextAware {
 
     public static Object getBean(String className, Object... args) {
         return context.getBean(className, args);
+    }
+
+    public static <T> Map<String, T> getBeans(Class<T> requiredType) {
+        return context.getBeansOfType(requiredType);
     }
 
     private static String getAnnotation(Class<?> type) {

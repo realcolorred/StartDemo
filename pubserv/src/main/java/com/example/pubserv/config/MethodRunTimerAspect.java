@@ -93,30 +93,44 @@ public class MethodRunTimerAspect {
         Tags tags = Tags.empty().and("method.ur", requestURI).and("method.name", method.toString());
         AtomicInteger num = Metrics.gauge("method.available", tags, new AtomicInteger(1));
 
-        // 错误抛出改为 ApiRespResult 模式
-        if (holder.throwable != null) {
-            num.set(0);
-            log.error("", holder.throwable);
-            Throwable throwable = holder.throwable;
+        try {
+            if (holder.throwable != null) {
+                num.set(0);
+                Throwable throwable = holder.throwable;
+                if (method.getReturnType() == ApiRespResult.class) {
+                    // 错误抛出改为 ApiRespResult 模式
+                    // 如果原返回结果格式是ApiRespResult才按照对应格式返回，否则直接返回错误
 
-            // 反射目标异常特殊处理，取出异常
-            if (throwable instanceof InvocationTargetException) {
-                throwable = ((InvocationTargetException) throwable).getTargetException();
-            }
-            if (throwable instanceof DemoException) {
-                DemoException demoException = (DemoException) throwable;
-                result = ApiRespResult.fail(demoException.getCode(), MDC.get(LogConstants.REQUEST_ID), demoException.getMessage());
+                    log.error("", throwable); // 异常在这里被我吃了，为了方便查问题，在这里打印出来
+
+                    // 反射目标异常特殊处理，取出异常
+                    if (throwable instanceof InvocationTargetException) {
+                        throwable = ((InvocationTargetException) throwable).getTargetException();
+                    }
+                    if (throwable instanceof DemoException) {
+                        DemoException demoException = (DemoException) throwable;
+                        result = ApiRespResult.fail(demoException.getCode(), MDC.get(LogConstants.REQUEST_ID), demoException.getMessage());
+                    } else {
+                        result = ApiRespResult.fail(HttpStatus.INTERNAL_SERVER_ERROR.value(), MDC.get(LogConstants.REQUEST_ID), throwable.toString());
+                    }
+                } else {
+                    // 反射目标异常特殊处理，取出异常
+                    if (throwable instanceof InvocationTargetException) {
+                        throwable = ((InvocationTargetException) throwable).getTargetException();
+                    }
+                    result = throwable.toString();
+                    throw throwable;
+                }
             } else {
-                result = ApiRespResult.fail(HttpStatus.INTERNAL_SERVER_ERROR.value(), MDC.get(LogConstants.REQUEST_ID), throwable.toString());
+                // 如果返回结果是ApiRespResult格式，则添加REQUEST_ID
+                if (result instanceof ApiRespResult) {
+                    ((ApiRespResult) result).setRequestId(MDC.get(LogConstants.REQUEST_ID));
+                }
             }
-        } else {
-            if (result instanceof ApiRespResult) {
-                ((ApiRespResult) result).setRequestId(MDC.get(LogConstants.REQUEST_ID));
-            }
+        } finally {
+            // 请求结束日志
+            writeResponseLog(result, uuid, startDate);
         }
-
-        // 请求结束日志
-        writeResponseLog(result, uuid, startDate);
 
         return result;
     }

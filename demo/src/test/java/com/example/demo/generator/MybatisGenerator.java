@@ -39,6 +39,8 @@ public class MybatisGenerator {
     // 数据源配置
     private final static String DATABASE_IP     = "127.0.0.1:3306";// 数据库id
     private final static String DATABASE_NAME   = "fgo";// 数据库名称
+    private final static String DATABASE_USER   = "root";
+    private final static String DATABASE_PASS   = "root";
     // 包配置
     private final static String PARENT          = "com.example.demo.dao";// 父包名。如果为空，将下面子包名必须写全部， 否则就只需写子包名
     private final static String MODULE_NAME     = "sourceCompany";// 父包模块名
@@ -50,8 +52,6 @@ public class MybatisGenerator {
      * RUN THIS
      */
     public static void main(String[] args) {
-        // 代码生成器
-        AutoGenerator mpg = new AutoGenerator();
 
         // 全局配置
         GlobalConfig gc = new GlobalConfig();
@@ -62,7 +62,6 @@ public class MybatisGenerator {
         gc.setBaseResultMap(true);
         gc.setBaseColumnList(true);
         gc.setFileOverride(false);//覆盖目录
-        mpg.setGlobalConfig(gc);
 
         // 数据源配置
         DataSourceConfig dsc = new DataSourceConfig();
@@ -70,8 +69,8 @@ public class MybatisGenerator {
         // dsc.setSchemaName("public");
         // dsc.setDriverName("com.mysql.jdbc.Driver");// JDK7
         dsc.setDriverName("com.mysql.jdbc.Driver");// JDK8
-        dsc.setUsername("root");
-        dsc.setPassword("root");
+        dsc.setUsername(DATABASE_USER);
+        dsc.setPassword(DATABASE_PASS);
         // 自定义数据库表字段类型转换【可选】
         dsc.setTypeConvert(new MySqlTypeConvert() {
             @Override
@@ -85,14 +84,11 @@ public class MybatisGenerator {
             }
         });
 
-        mpg.setDataSource(dsc);
-
         // 包配置
         PackageConfig pc = new PackageConfig();
         //        pc.setModuleName(scanner("模块名"));
         pc.setModuleName(MODULE_NAME);
         pc.setParent(PARENT);
-        mpg.setPackageInfo(pc);
 
         // 自定义配置
         InjectionConfig cfg = new InjectionConfig() {
@@ -112,12 +108,11 @@ public class MybatisGenerator {
             }
         });
         cfg.setFileOutConfigList(focList);
-        mpg.setCfg(cfg);
+
         TemplateConfig templateConfig = new TemplateConfig();
         templateConfig.setController("");//不生成controller；
         templateConfig.setService("");
         templateConfig.setServiceImpl("");
-        mpg.setTemplate(templateConfig.setXml(null));
 
         // 策略配置
         StrategyConfig strategy = new StrategyConfig();
@@ -130,20 +125,22 @@ public class MybatisGenerator {
         //strategy.setSuperEntityColumns("id");
         strategy.setControllerMappingHyphenStyle(true);
         strategy.setTablePrefix(pc.getModuleName() + "_");
+
+        // 代码生成器
+        AutoGenerator mpg = new AutoGenerator();
+        mpg.setGlobalConfig(gc);
+        mpg.setDataSource(dsc);
+        mpg.setPackageInfo(pc);
+        mpg.setCfg(cfg);
+        mpg.setTemplate(templateConfig.setXml(null));
         mpg.setStrategy(strategy);
-        // 选择 freemarker 引擎需要指定如下加，注意 pom 依赖必须有！
-        mpg.setTemplateEngine(new FreemarkerTemplateEngine());
+        mpg.setTemplateEngine(new FreemarkerTemplateEngine()); // 选择 freemarker 引擎需要指定如下加，注意 pom 依赖必须有！
         mpg.execute();
     }
 
-    /**
-     * <p>读取控制台内容</p>
-     */
     public static String[] scanner(String tip) {
         Scanner scanner = new Scanner(System.in);
-        StringBuilder help = new StringBuilder();
-        help.append("请输入" + tip + "：");
-        System.out.println(help.toString());
+        System.out.println(("请输入" + tip + "："));
         if (scanner.hasNext()) {
             String ipt = scanner.next();
             if (StringUtil.isNotEmpty(ipt)) {
