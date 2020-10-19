@@ -1,11 +1,13 @@
 package com.example.task.task;
 
+import com.example.task.task.base.BaseJob;
 import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.Metrics;
 import io.micrometer.core.instrument.search.Search;
 import io.micrometer.core.instrument.simple.SimpleMeterRegistry;
 import lombok.extern.slf4j.Slf4j;
 import org.quartz.DisallowConcurrentExecution;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -20,13 +22,18 @@ import java.util.List;
 @DisallowConcurrentExecution // 此标记用在实现Job的类上面,意思是不允许并发执行
 public class MetricsJob extends BaseJob<String> {
 
+    @Value("${spring.demo.job.status.MetricsJob:close}")
+    private String status;
+
     static {
         Metrics.addRegistry(new SimpleMeterRegistry());
     }
 
-    //@Scheduled(fixedRate = 1 * 1000)//每5秒执行一次
+    @Scheduled(fixedRate = 1 * 1000)//每5秒执行一次
     public void exe() {
-        super.execute();
+        if ("open".equals(status)) {
+            super.execute();
+        }
     }
 
     @Override
@@ -46,7 +53,7 @@ public class MetricsJob extends BaseJob<String> {
         });
     }
 
-    public void counterTest() {
+    private void counterTest() {
         Counter counter = Metrics.counter("metrics.test.counter", "from", "MetricsJob");
         counter.increment();
     }

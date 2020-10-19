@@ -1,11 +1,14 @@
 package com.example.common.request;
 
+import com.example.common.exception.ErrorMessage;
 import com.example.common.util.StringUtil;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+
+import java.text.MessageFormat;
 
 /**
  * Created by new on 2020/8/28.
@@ -35,20 +38,8 @@ public class ApiRespResult<T> {
         return result;
     }
 
-    public static <T> ApiRespResult<T> fail(int code) {
-        return fail(String.valueOf(code));
-    }
-
-    public static <T> ApiRespResult<T> fail(int code, String message) {
-        return fail(String.valueOf(code), message);
-    }
-
-    public static <T> ApiRespResult<T> fail(int code, String requestId, String message) {
-        return fail(String.valueOf(code), requestId, message);
-    }
-
-    public static <T> ApiRespResult<T> fail(String code) {
-        return fail(code, null);
+    public boolean isSuccess() {
+        return "0".equals(code);
     }
 
     public static <T> ApiRespResult<T> fail(String code, String message) {
@@ -65,4 +56,12 @@ public class ApiRespResult<T> {
         result.setRequestId(requestId);
         return result;
     }
+
+    public static <T> ApiRespResult<T> fail(ErrorMessage errorMessage, String... paramValue) {
+        ApiRespResult<T> result = new ApiRespResult<T>();
+        result.setCode(errorMessage.getCode());
+        result.setMessage(MessageFormat.format(errorMessage.getMsg(), paramValue));
+        return result;
+    }
+
 }

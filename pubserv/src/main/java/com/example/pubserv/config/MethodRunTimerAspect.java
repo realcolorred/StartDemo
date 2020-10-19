@@ -111,7 +111,8 @@ public class MethodRunTimerAspect {
                         DemoException demoException = (DemoException) throwable;
                         result = ApiRespResult.fail(demoException.getCode(), MDC.get(LogConstants.REQUEST_ID), demoException.getMessage());
                     } else {
-                        result = ApiRespResult.fail(HttpStatus.INTERNAL_SERVER_ERROR.value(), MDC.get(LogConstants.REQUEST_ID), throwable.toString());
+                        result = ApiRespResult
+                            .fail(String.valueOf(HttpStatus.INTERNAL_SERVER_ERROR.value()), MDC.get(LogConstants.REQUEST_ID), throwable.toString());
                     }
                 } else {
                     // 反射目标异常特殊处理，取出异常

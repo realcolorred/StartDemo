@@ -42,6 +42,13 @@
             <!-- 这是测试组件，只需要在测试阶段使用，不会被打包 -->
         </dependency>
 
+        <!-- 解析excel文档 -->
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>3.17</version>
+        </dependency>
+
     </dependencies>
 
     <build>

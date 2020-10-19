@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 /**
  * Created by new on 2020/7/2.
  */
-@FeignClient(name = "demo", path = "/metrics", url = "${demo-url:}")
+@FeignClient(name = "demo", contextId = "metrics", path = "/metrics", url = "${demo-url:}")
 public interface TestFeign {
 
     @GetMapping

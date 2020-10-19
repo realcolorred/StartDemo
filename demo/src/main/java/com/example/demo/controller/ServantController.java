@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.common.exception.DemoException;
 import com.example.common.request.ApiRespResult;
+import com.example.common.util.NumberUtil;
 import com.example.demo.dao.sourceCompany.entity.Servant;
 import com.example.demo.service.IServantService;
 import lombok.extern.slf4j.Slf4j;
@@ -20,16 +21,36 @@ public class ServantController {
     @Autowired
     private IServantService servantService;
 
-    @GetMapping(value = "/insertOneTestData")
+    @PostMapping(value = "/insertOneTestData")
     public ApiRespResult<Integer> insertOneTestData() {
         int ret = servantService.insertServant("我是一个测试");
         return ApiRespResult.success(ret);
     }
 
-    @GetMapping(value = "/insert")
-    public ApiRespResult<String> insert(@RequestParam String name) {
+    @PostMapping(value = "/insert")
+    public ApiRespResult<String> insert(@RequestParam(value = "name") String name) {
         try {
             servantService.insertServant(name);
+        } catch (DemoException e) {
+            log.warn(e.getMessage());
+            return ApiRespResult.fail(e.getCode(), e.getMessage());
+        }
+        return ApiRespResult.success(name);
+    }
+
+    @PostMapping(value = "/insertData")
+    public ApiRespResult<String> insertData(@RequestParam(value = "name") String name, @RequestParam(value = "ename") String ename,
+                                            @RequestParam(value = "sex") String sex, @RequestParam(value = "weight") String weight,
+                                            @RequestParam(value = "height") String height, @RequestParam(value = "star") String star) {
+        try {
+            Servant servant = new Servant();
+            servant.setServantNameChina(name);
+            servant.setServantNameEnglish(ename);
+            servant.setSex(sex);
+            servant.setWeight(weight);
+            servant.setHeight(height);
+            servant.setStar(NumberUtil.toLong(star));
+            servantService.insertServant(servant);
         } catch (DemoException e) {
             log.warn(e.getMessage());
             return ApiRespResult.fail(e.getCode(), e.getMessage());

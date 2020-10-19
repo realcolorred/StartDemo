@@ -21,6 +21,12 @@
             <version>${version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.example</groupId>
+            <artifactId>demoapi</artifactId>
+            <version>${version}</version>
+        </dependency>
+
         <!--  Spring Boot Actuator可以帮助你监控和管理Spring Boot应用 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

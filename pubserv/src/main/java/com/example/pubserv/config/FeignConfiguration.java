@@ -28,26 +28,28 @@ public class FeignConfiguration {
             @Override
             public void apply(RequestTemplate template) {
                 ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-                HttpServletRequest request = attributes.getRequest();
-                Enumeration<String> headerNames = request.getHeaderNames();
-                if (headerNames != null) {
-                    while (headerNames.hasMoreElements()) {
-                        String name = headerNames.nextElement();
-                        String values = request.getHeader(name);
-                        template.header(name, values);
+                if (attributes != null) {
+                    HttpServletRequest request = attributes.getRequest();
+                    Enumeration<String> headerNames = request.getHeaderNames();
+                    if (headerNames != null) {
+                        while (headerNames.hasMoreElements()) {
+                            String name = headerNames.nextElement();
+                            String values = request.getHeader(name);
+                            template.header(name, values);
+                        }
                     }
-                }
 
-                String reqId = request.getHeader(LogConstants.REQUEST_ID);
-                String reqMDC = MDC.get(LogConstants.REQUEST_ID);
-                if (!template.headers().containsKey(LogConstants.REQUEST_ID)) {
-                    if (StringUtil.isNotEmpty(reqMDC)) {
-                        template.header(LogConstants.REQUEST_ID, reqMDC);
-                    } else if (StringUtil.isNotEmpty(reqId)) {
-                        template.header(LogConstants.REQUEST_ID, reqId);
+                    String reqId = request.getHeader(LogConstants.REQUEST_ID);
+                    String reqMDC = MDC.get(LogConstants.REQUEST_ID);
+                    if (!template.headers().containsKey(LogConstants.REQUEST_ID)) {
+                        if (StringUtil.isNotEmpty(reqMDC)) {
+                            template.header(LogConstants.REQUEST_ID, reqMDC);
+                        } else if (StringUtil.isNotEmpty(reqId)) {
+                            template.header(LogConstants.REQUEST_ID, reqId);
+                        }
                     }
+                    //log.debug("feign请求的请求头复制结束");
                 }
-                //log.debug("feign请求的请求头复制结束");
             }
         };
     }

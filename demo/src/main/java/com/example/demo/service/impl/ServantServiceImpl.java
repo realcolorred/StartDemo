@@ -18,6 +18,14 @@ public class ServantServiceImpl extends BaseService implements IServantService {
 
     @Override
     public int insertServant(String name) {
+        Servant entity = new Servant();
+        entity.setServantNameChina(name);
+        return this.insertServant(entity);
+    }
+
+    @Override
+    public int insertServant(Servant servant) {
+        String name = servant.getServantNameChina();
         if (isEmpty(name)) {
             throw new DemoException(ErrorMessage.DATA_INSERT_FAIL, "名称不能为空");
         }
@@ -29,9 +37,7 @@ public class ServantServiceImpl extends BaseService implements IServantService {
             throw new DemoException(ErrorMessage.DATA_INSERT_FAIL_EXIST, name);
         }
 
-        Servant entity = new Servant();
-        entity.setServantNameChina(name);
-        return servantMapper.insert(entity);
+        return servantMapper.insert(servant);
     }
 
     @Override

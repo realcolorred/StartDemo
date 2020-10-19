@@ -22,10 +22,8 @@ public class JWTSigner {
         if (verifier == null) {
             synchronized (JWTSigner.class) {
                 if (verifier == null) {
-                    // TODO 待实现
-                    //TokenSecretConfig tokenSecretConfig = SpringBeanUtils.getBean(TokenSecretConfig.class);
-                    //algorithm = Algorithm.HMAC256(tokenSecretConfig.getTokenSecret());
-                    algorithm = Algorithm.HMAC256("123123");
+                    TokenSecretConfig tokenSecretConfig = SpringBeanUtils.getBean(TokenSecretConfig.class);
+                    algorithm = Algorithm.HMAC256(tokenSecretConfig.getTokenSecret());
                     verifier = JWT.require(algorithm).build();
                 }
             }

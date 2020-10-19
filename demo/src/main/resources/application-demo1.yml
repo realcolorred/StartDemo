@@ -60,6 +60,7 @@ spring.auto:
 jedis.pool:
   host: 127.0.0.1
   port: 6379
+  password: realcolorred
 
 swagger:
   enable: true

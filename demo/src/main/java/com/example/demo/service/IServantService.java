@@ -7,6 +7,8 @@ public interface IServantService {
 
     int insertServant(String name);
 
+    int insertServant(Servant servant);
+
     Page<Servant> getList(String name, String eName, String sex, Long star, Long pageIndex, Long pageSize);
 
 }

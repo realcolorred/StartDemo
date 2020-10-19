@@ -1,10 +1,13 @@
-package com.example.task.task;
+package com.example.task.task.base;
 
 import com.example.common.util.CollectionUtil;
 import com.example.pubserv.util.redis.RedisLockUtil;
 import com.example.pubserv.util.redis.bo.RedisLockBo;
 import lombok.extern.slf4j.Slf4j;
+import redis.clients.jedis.exceptions.JedisConnectionException;
+import redis.clients.jedis.exceptions.JedisException;
 
+import java.net.SocketTimeoutException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -76,8 +79,10 @@ public abstract class BaseJob<T> {
             } else {
                 log.debug("获取该数据：{}的锁失败，不执行定时任务。", lockKey);
             }
-        } catch (Exception e) {
-            log.error("加锁失败或者任务执行出错。", e);
+        }catch (JedisException e){
+            log.error("加锁失败！", e);
+        }catch (Exception e) {
+            log.error("任务执行出错。", e);
         } finally {
             if (redisLockBo != null) {
                 RedisLockUtil.ulock(redisLockBo);

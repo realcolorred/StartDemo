@@ -27,3 +27,4 @@ token.secret: 6af24872a460ecd9951cc8d822acb76e
 spring.redis:
   host: 127.0.0.1
   port: 6379
+  password: realcolorred

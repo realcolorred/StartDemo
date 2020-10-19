@@ -4,7 +4,11 @@ import com.alibaba.fastjson.JSON;
 import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.example.common.constant.LogConstants;
+import com.example.common.exception.DemoException;
+import com.example.common.request.ApiRespResult;
 import com.example.common.util.StringUtil;
+import com.example.demoapi.api.UserApi;
+import com.example.demoapi.dto.UserInfoDto;
 import com.example.gateway.common.ExceptionEnum;
 import com.example.gateway.common.JwtConst;
 import com.example.gateway.common.ReturnData;
@@ -12,6 +16,7 @@ import com.example.gateway.util.JWTSigner;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
@@ -39,7 +44,10 @@ import java.util.List;
 public class JwtFilter implements GlobalFilter, Ordered {
 
     @Value("#{'${filter.jwt.ignore}'.split(',')}")
-    public List<String> noFilterList;
+    private List<String> noFilterList;
+
+    @Autowired
+    private UserApi userApi;
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
@@ -51,16 +59,18 @@ public class JwtFilter implements GlobalFilter, Ordered {
         String reqId = request.getHeaders().getFirst(LogConstants.REQUEST_ID);
         String userId = request.getHeaders().getFirst(LogConstants.USER_ID);
 
+        // 用户自己不能自动传入reqId，userId等误导信息干扰程序判断。
         if (StringUtil.isNotEmpty(reqId) || StringUtil.isNotEmpty(userId)) {
             log.warn("非法请求!用户token:{}请求url:{}.输入的reqId:{},userId:{}", token, url, reqId, userId);
             return failResponse(request, response, ExceptionEnum.TOKEN_INVALID);
         }
 
+        // 某些请求并不需要登录
         if (shouldPass(url)) {
             return chain.filter(exchange);
         }
 
-        if (token != null && !"".equals(token)) {
+        if (StringUtil.isNotEmpty(token)) {
             try {
                 // 验证签名
                 DecodedJWT decodedJWT = JWTSigner.verify(token);
@@ -77,12 +87,18 @@ public class JwtFilter implements GlobalFilter, Ordered {
                 request.mutate().header(JwtConst.USER_INFO, userInfo).build();
 
                 log.info("登录用户信息为：{}，请求url为：{}", userInfo, url);
+
+                if (!canVisit(userInfo, url)) {
+                    log.warn("用户越权访问。用户信息为：{}，请求url为：{}", userInfo, url);
+                    return failResponse(request, response, ExceptionEnum.TOKEN_NO_PRIVILEGE);
+                }
+
                 return chain.filter(exchange.mutate().request(request).build());
             } catch (TokenExpiredException e) {
-                log.info("jwt expired", e);
+                log.info("jwt expired, {} token:{}", e.getMessage(), token);
                 return failResponse(request, response, ExceptionEnum.TOKEN_EXPIRED);
             } catch (Exception e) {
-                log.info("jwt verify failed", e);
+                log.warn("jwt verify failed", e);
                 return failResponse(request, response, ExceptionEnum.TOKEN_INVALID);
             }
         }
@@ -103,6 +119,17 @@ public class JwtFilter implements GlobalFilter, Ordered {
         }
         PathMatcher antPathMatcher = new AntPathMatcher();
         return this.noFilterList.stream().anyMatch(s -> antPathMatcher.match(s, url));
+    }
+
+    private boolean canVisit(String userInfo, String url) throws Exception {
+        UserInfoDto userInfoDto = JSON.parseObject(userInfo, UserInfoDto.class);
+        ApiRespResult<List<String>> apiRespResult = userApi.getPermission(userInfoDto.getUserId());
+        if (apiRespResult.isSuccess()) {
+            PathMatcher antPathMatcher = new AntPathMatcher();
+            return apiRespResult.getData().stream().anyMatch(s -> antPathMatcher.match(s, url));
+        } else {
+            throw new Exception("获取用户权限失败，禁止访问！");
+        }
     }
 
     @Override

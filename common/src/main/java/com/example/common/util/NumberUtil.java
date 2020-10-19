@@ -1,5 +1,7 @@
 package com.example.common.util;
 
+import java.math.BigDecimal;
+
 /**
  * Created by realcolorred on 2019/3/12.
  */
@@ -27,4 +29,26 @@ public class NumberUtil {
             return defaultValue;
         }
     }
+
+    public static Integer toInt(double number) {
+        // double转化为int，小数位四舍五入
+        BigDecimal bd = new BigDecimal(number).setScale(0, BigDecimal.ROUND_HALF_UP);
+        return Integer.parseInt(bd.toString());
+    }
+
+    public static long toLong(String str) {
+        return toLong(str, 0);
+    }
+
+    public static long toLong(String str, long defaultValue) {
+        if (str == null) {
+            return defaultValue;
+        }
+        try {
+            return Long.parseLong(str);
+        } catch (NumberFormatException nfe) {
+            return defaultValue;
+        }
+    }
+
 }

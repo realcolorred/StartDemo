@@ -16,3 +16,6 @@ eureka:
     fetchRegistry: false
     service-url:
       defaultZone: http://eureka1:8701/eureka/
+
+# 不加这个prometheus日志上就会报错，不知道为啥，
+spring.mvc.async.request-timeout: -1
