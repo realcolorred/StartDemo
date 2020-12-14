@@ -88,7 +88,7 @@ spring.kafka:
 spring.demo.job.status:
   TimeJob: close
   FeignTestJob: close
-  KafkaTestJob: close
+  KafkaTestJob: open
   MetricsJob: close
   ReadExcelJob: close
 

@@ -36,7 +36,7 @@ public class KafkaTestJob extends BaseJob<String> {
     @Override
     public List<String> getTasks() {
         List<String> list = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 2; i++) {
             list.add("消息测试" + System.currentTimeMillis() + "-" + i);
         }
         return list;
