@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:v-bind="http://www.w3.org/1999/xhtml" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <title>Vue</title>
+    <script src="js/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <div>
+        <table>
+            <tr>
+                <td>
+                    <input v-model="message1" placeholder="">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <textarea v-model="message2" placeholder=""></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="checkbox" id="checkbox" v-model="message3">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="checkbox" id="jack" value="Jack" v-model="message4">
+                    <input type="checkbox" id="john" value="John" v-model="message4">
+                    <input type="checkbox" id="mike" value="Mike" v-model="message4">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="radio" id="one" value="One" v-model="message5">
+                    <input type="radio" id="two" value="Two" v-model="message5">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <select v-model="message6">
+                        <option disabled value="">请选择</option>
+                        <option>A</option>
+                        <option>B</option>
+                        <option>C</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+</body>
+
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            styleRedText: {color: 'red'},
+            styleTianYiText: {color: '#66ccff'},
+            message1: '',
+            message2: '',
+            message3: false,
+            message4: [],
+            message5: '',
+            message6: '',
+            message7: '',
+            message8: ''
+        }
+    });
+</script>
+</html>

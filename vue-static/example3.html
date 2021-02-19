@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html xmlns:v-bind="http://www.w3.org/1999/xhtml" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <title>vue计算器</title>
+    <script src="js/vue.js"></script>
+</head>
+
+<body>
+<div>
+    <h2>计算 附录B.0.2</h2>
+</div>
+<div id="app">
+    <button type="button" v-on:click="showEvent">显示/隐藏公式原图</button>
+    <div v-if="showPic">
+        <div><img src="pic/B.0.2-1.png"></div>
+        <div><img src="pic/B.0.2-2.png"></div>
+    </div>
+    <div>
+        <div>
+            <table>
+                <tr>
+                    <th>Σb</th>
+                    <td><input type="text" v-model='Σb'></td>
+                    <td></td>
+                    <td>矩形截面的相对受限受压区高度</td>
+                </tr>
+                <tr>
+                    <th>fc</th>
+                    <td><input type="text" v-model='fc'></td>
+                    <td>kN/m²</td>
+                    <td>混凝土轴心抗压强度设计值</td>
+                </tr>
+                <tr>
+                    <th>fy</th>
+                    <td><input type="text" v-model='fy'></td>
+                    <td>kN/m²</td>
+                    <td>纵向钢筋抗拉强度设计值</td>
+                </tr>
+                <tr>
+                    <th>α</th>
+                    <td><input type="text" v-model='α'></td>
+                    <td></td>
+                    <td>受压区混凝土截面面积的圆心角与2π的比值</td>
+                </tr>
+                <tr>
+                    <th>αs</th>
+                    <td><input type="text" v-model='αs'></td>
+                    <td></td>
+                    <td>受拉钢筋的圆心角与2π的比值。宜取 1/6 - 1/3 通常可取 0.25</td>
+                </tr>
+                <tr>
+                    <th>α1s</th>
+                    <td><input type="text" v-model='α1s'></td>
+                    <td></td>
+                    <td>受压钢筋的圆心角与2π的比值。宜取 α1s<=0.5α</td>
+                </tr>
+                <tr>
+                    <th>r</th>
+                    <td><input type="text" v-model='r'></td>
+                    <td>m</td>
+                    <td>桩半径</td>
+                </tr>
+                <tr>
+                    <th>A</th>
+                    <td>{{ A }}</td>
+                    <td>m²</td>
+                    <td>桩截面积</td>
+                </tr>
+                <tr>
+                    <th>rs</th>
+                    <td><input type="text" v-model='rs'></td>
+                    <td>m</td>
+                    <td>纵向钢筋重心所在圆周的半径</td>
+                </tr>
+                <tr>
+                    <th>M</th>
+                    <td><input type="text" v-model='M'></td>
+                    <td>kN·m</td>
+                    <td>桩弯矩设计值</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div>
+        <div>
+            <button type="button" v-on:click="cal">开始计算</button>
+            <span style="color: red">{{ message }}</span>
+        </div>
+        <table>
+            <tr>
+                <th>Asr</th>
+                <td>纵向受拉钢筋的截面面积</td>
+                <td>{{ Asr }}</td>
+                <td>m²</td>
+            </tr>
+            <tr>
+                <th></th>
+                <td></td>
+                <td>{{ Asrmm }}</td>
+                <td>mm²</td>
+            </tr>
+            <tr>
+                <th>A1sr</th>
+                <td>纵向受压钢筋的截面面积</td>
+                <td>{{ A1sr }}</td>
+                <td>m²</td>
+            </tr>
+            <tr>
+                <th></th>
+                <td></td>
+                <td>{{ A1srmm }}</td>
+                <td>mm²</td>
+            </tr>
+        </table>
+    </div>
+</div>
+</body>
+
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            message: '',
+            showPic: false,
+            Σb: 0.52,
+            fc: 14300,
+            fy: 360000,
+            α: 0.3,
+            αs: 0.25,
+            αt: 0,
+            α1s: 0.15,
+            r: 0.75,
+            rs: 0.65,
+            M: 3365,
+            Asr: 0,
+            A1sr: 0
+        },
+        computed: {
+            A: function () {
+                // 桩截面积
+                return Math.PI * this.r * this.r;
+            },
+            Asrmm: function () {
+                return 1000 * 1000 * this.Asr
+            },
+            A1srmm: function () {
+                return 1000 * 1000 * this.A1sr
+            }
+        },
+        methods: {
+            cal: function () {
+                if (this.α < 1 / 3.5) {
+                    this.message = 'α值不符合要求B.0.2-4，α>=1/3.5';
+                    return;
+                }
+
+                var πα = Math.PI * this.α;
+                var παs = Math.PI * this.αs;
+                var πα1s = Math.PI * this.α1s;
+
+                var tempValue3 = Math.cos(πα);
+                var tempValue4 = 1 - (1 + this.rs / this.r * Math.cos(παs)) * this.Σb;
+                if (tempValue3 < tempValue4) {
+                    this.message = '当前填值不满足要求B.0.2-3';
+                    return;
+                }
+
+                var temp1 = 2 / 3 * this.fc * this.A * this.r * Math.sin(πα) * Math.sin(πα) * Math.sin(πα) / Math.PI;
+                console.log('混凝土提供的弯矩:' + temp1);
+
+                var temp2 = this.M - temp1;
+                console.log('钢筋需要提供的弯矩:' + temp2);
+
+                var Asr = (temp2 + (this.α * this.fc * this.A * (1 - Math.sin(2 * πα) / (2 * πα)) / this.fy) * (this.fy * this.rs * Math.sin(πα1s) / πα1s) )
+                        / (this.fy * this.rs * ( Math.sin(παs) / παs + Math.sin(πα1s) / πα1s));
+                var A1sr = Asr - this.α * this.fc * this.A * (1 - Math.sin(2 * πα) / (2 * πα)) / this.fy;
+                this.Asr = Asr;
+                this.A1sr = A1sr;
+                var message = '';
+                if (temp1 > this.M) {
+                    message += '警告：混凝土弯矩已经大于桩弯矩设计值！';
+                }
+                if (Asr < 0) {
+                    message += '警告：纵向受拉钢筋截面积小于0！';
+                }
+                if (A1sr < 0) {
+                    message += '警告：纵向受压钢筋截面积小于0！';
+                }
+
+                this.message = message;
+            },
+            showEvent: function () {
+                this.showPic = !this.showPic;
+            }
+        }
+    });
+</script>
+</html>

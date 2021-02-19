@@ -18,6 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.util.DigestUtils;
 import org.springframework.web.client.RestTemplate;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Map;
@@ -32,6 +33,34 @@ public class UtilTest {
     @AfterClass
     public static void afterTest() {
         System.out.println("============测试结束================");
+    }
+
+    @Test
+    public void splitTest() throws Exception {
+        String msg = "imp_BATCH_PARTY_ZQ_DELETE2019100115204093.csv@@ok@@身份证批量删除模板2019-09-29多数据.csv@@2944090526";
+        String[] params = msg.split("@@");
+        if (params != null && params.length > 4) {
+            System.out.println(params.length);
+        }else {
+            throw new Exception("param格式不对，非fileName@@filePath@@fileAlias@@staffId格式！ ");
+        }
+    }
+
+    @Test
+    public void stringEnconding() throws UnsupportedEncodingException {
+        String str = "李帅金袁言凡是基佬";
+        String sss = new String(str.getBytes("UTF-8"),"GBK");
+        System.out.println(sss);
+    }
+
+    @Test
+    public void strSptlit(){
+        String str = "zhicaihegui_anhui_00000001_20190408.txt";
+        String[] strs = str.split("_|-|\\.");
+        for(String s : strs){
+            System.out.println(s);
+        }
+
     }
 
     @Test

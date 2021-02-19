@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:v-bind="http://www.w3.org/1999/xhtml" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <title>Vue</title>
+    <script src="js/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <div>
+        <span v-bind:style="styleRedText">
+            模板内的表达式非常便利，但是设计它们的初衷是用于简单运算的，在模板中放入太多的逻辑会让模板过重且难以维护。
+        </span>
+        <span v-bind:style="styleTianYiText"><br/>使用表达式获得结果如下:</span>
+        <span><br/> {{ message.split('').reverse().join('') }}</span>
+        <span v-bind:style="styleTianYiText"><br/>使用计算属性获得结果如下:</span>
+        <span><br/> {{ reversedMessage }}</span>
+        <span v-bind:style="styleTianYiText"><br/>使用方法获得结果如下:</span>
+        <span><br/> {{ reversedMessageMethod() }}</span>
+        <span v-bind:style="styleRedText">
+            <br/>计算属性的值是固定的，只有当其中的依赖值改变，计算属性的值才会相应改变。
+            <br/>方法获取的值是动态的，每次调用都会重新计算。
+        </span>
+    </div>
+</div>
+</body>
+
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            styleRedText: {color: 'red'},
+            styleTianYiText: {color: '#66ccff'},
+            message: '我是一条消息'
+        },
+        computed: {
+            reversedMessage: function () {
+                return this.message.split('').reverse().join('')
+            }
+        },
+        methods: {
+            reversedMessageMethod: function () {
+                return this.message.split('').reverse().join('')
+            }
+        }
+    });
+</script>
+</html>

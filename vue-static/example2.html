@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:v-bind="http://www.w3.org/1999/xhtml" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <title>Vue 基本语法2</title>
+    <script src="js/vue.js"></script>
+</head>
+<body>
+
+<div id="app">
+    <ol>
+        <personal-item v-bind:p_text="message"></personal-item>
+    </ol>
+    ----------------------------------------------------
+    <ol>
+        <personal-item v-for="oneText in ListMessage" v-bind:p_text="oneText" v-bind:key="oneText.id"></personal-item>
+    </ol>
+</div>
+
+
+----------------------------------------------------
+
+<script>
+    Vue.component('personal-item', {
+        props: ['p_text'],
+        template: '<li>{{ p_text.text }}</li>'
+    });
+
+    var app = new Vue({
+        el: '#app',
+        data: {
+            message: {text: '自定义组件'},
+            ListMessage: [
+                {id: 1, text: '显示器'},
+                {id: 2, text: '机箱'},
+                {id: 3, text: '硬盘'}
+            ]
+        }
+    });
+</script>
+</body>
+</html>
